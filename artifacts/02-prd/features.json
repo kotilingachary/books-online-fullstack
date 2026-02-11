@@ -1,0 +1,397 @@
+{
+  "features": [
+    {
+      "featureId": "F001",
+      "featureName": "Book List Management",
+      "description": "Display all books in a paginated table with sortable columns, quick filters, and search functionality for efficient browsing",
+      "priority": "Must Have",
+      "category": "Core Functionality",
+      "complexity": "Medium",
+      "estimatedEffort": "5 days",
+      "dependencies": [],
+      "screens": ["Books List View (01_books_list_view.svg)"],
+      "userStories": [
+        "As a library administrator, I want to see all books in a table format so that I can quickly scan the collection",
+        "As a catalog manager, I want to view book covers in the table so that I can visually identify books",
+        "As a user, I want to navigate through multiple pages of books so that I can browse large collections efficiently",
+        "As a catalog manager, I want to filter books by genre so that I can view specific categories",
+        "As a user, I want to filter by publication year so that I can find books from a specific era",
+        "As a user, I want to quickly search for books from any screen so that I can find books without navigating to search page"
+      ],
+      "acceptanceCriteria": [
+        "Table displays 6 columns: Cover (thumbnail), Title, Author, Genre, Year, Actions",
+        "Cover images display as thumbnails, missing covers show placeholder",
+        "Table is sortable by Title, Author, Genre, and Year",
+        "Pagination displays showing X-Y of Z books with navigation controls",
+        "Dropdown filters for Genre, Author, Year apply immediately",
+        "Header search bar performs real-time search across title, author, ISBN",
+        "Empty states show helpful messages with actionable next steps",
+        "Edit and Delete buttons displayed for each book row",
+        "Clicking row navigates to Book Details",
+        "+ Add Book button prominent in header"
+      ],
+      "requirements": ["FR-001", "FR-002", "FR-003", "FR-004", "FR-005", "FR-006", "FR-007", "FR-008", "FR-009", "FR-010"]
+    },
+    {
+      "featureId": "F002",
+      "featureName": "Add New Book",
+      "description": "Comprehensive form for adding new books with required/optional fields, cover image upload, validation, and automatic metadata generation",
+      "priority": "Must Have",
+      "category": "Core Functionality",
+      "complexity": "High",
+      "estimatedEffort": "7 days",
+      "dependencies": [],
+      "screens": ["Add Book Form (02_add_book_form.svg)"],
+      "userStories": [
+        "As a library administrator, I want to add new books with complete metadata so that the catalog is comprehensive and accurate",
+        "As a user, I want to upload book cover images so that books are visually identifiable in the catalog",
+        "As a data entry clerk, I want form validation to prevent errors so that I don't submit invalid data",
+        "As a user, I want to provide additional book details when available so that the catalog is as complete as possible"
+      ],
+      "acceptanceCriteria": [
+        "Form displays with 2-column layout (cover upload left, fields right)",
+        "Cover image upload supports drag-drop and click-to-upload",
+        "Supported image formats: JPEG, PNG, GIF, WebP (max 5MB)",
+        "Required fields validated: Title, ISBN, Author, Genre, Publication Year, Language",
+        "Optional fields accepted: Publisher, Pages, Price, Stock Quantity, Description",
+        "ISBN validated for format (ISBN-10/13) and uniqueness in database",
+        "Genre dropdown provides 8 options: Fiction, Non-Fiction, Dystopian, Romance, Mystery, Science, Biography, Fantasy",
+        "Language dropdown provides 10 options: English, Spanish, French, German, Italian, Portuguese, Chinese, Japanese, Korean, Arabic",
+        "Publication year validated: 1000 to current year",
+        "Price and stock quantity validated as non-negative",
+        "System auto-generates: id, createdAt, updatedAt, isAvailable, viewCount, reviewCount, rating",
+        "On successful submission, navigate to Books List with success toast",
+        "Cancel button returns to Books List without saving"
+      ],
+      "requirements": ["FR-011", "FR-012", "FR-013", "FR-014", "FR-015", "FR-016", "FR-017", "FR-018", "FR-019", "FR-020"]
+    },
+    {
+      "featureId": "F003",
+      "featureName": "Advanced Search",
+      "description": "Powerful multi-criteria search with quick search option, advanced filters including text fields, dropdowns, ranges, checkboxes, and sort options",
+      "priority": "Should Have",
+      "category": "Search & Discovery",
+      "complexity": "High",
+      "estimatedEffort": "6 days",
+      "dependencies": ["F001"],
+      "screens": ["Search Books (03_search_books.svg)"],
+      "userStories": [
+        "As a user, I want a dedicated search page with advanced options so that I can find books using multiple criteria",
+        "As a user, I want to search quickly with a single search box so that I can find books without filling multiple fields",
+        "As a user, I want to search by specific fields so that I can narrow results precisely",
+        "As a user, I want to filter search results by categorical fields so that I can find books in specific categories",
+        "As a user, I want to search for books published within a date range so that I can find books from specific eras",
+        "As a user, I want to search for books within a price range so that I can find books fitting my budget"
+      ],
+      "acceptanceCriteria": [
+        "Quick Search: Large search input matching title, author, ISBN, keywords",
+        "Advanced Search form with 12+ fields in 2-column grid layout",
+        "Text inputs for: Title, Author, ISBN, Publisher (partial, case-insensitive match)",
+        "Dropdown filters for: Genre, Language, Availability (exact match)",
+        "Year range: From/To inputs for publication year filtering",
+        "Price range: Min/Max inputs for price filtering",
+        "Sort Results By dropdown: 8 options including Relevance, Title, Author, Year, Price, Rating",
+        "Checkboxes: In Stock Only, On Sale, New Releases",
+        "Clear Filters button resets all fields",
+        "Search Tips banner provides usage guidance",
+        "Results displayed in Books List View with pagination",
+        "No results shows helpful message with suggestions",
+        "All filled criteria use AND logic"
+      ],
+      "requirements": ["FR-021", "FR-022", "FR-023", "FR-024", "FR-025", "FR-026", "FR-027", "FR-028", "FR-029", "FR-030"]
+    },
+    {
+      "featureId": "F004",
+      "featureName": "Edit/Update Book",
+      "description": "Pre-populated form for editing existing book details with ISBN immutability, validation, cover image change, and automatic timestamp updates",
+      "priority": "Must Have",
+      "category": "Core Functionality",
+      "complexity": "Medium",
+      "estimatedEffort": "5 days",
+      "dependencies": ["F002"],
+      "screens": ["Update Book Form (04_update_book_form.svg)"],
+      "userStories": [
+        "As a user, I want to edit book information so that I can correct errors or update details",
+        "As a system, I want to load current book data so that the user can see what they're editing",
+        "As a user, I want to see book ID and update history so that I know which book I'm editing and when it was last changed",
+        "As a user, I want to update the book cover image so that I can replace incorrect or low-quality images",
+        "As a user, I want to change any book detail except ISBN so that I can keep information up-to-date"
+      ],
+      "acceptanceCriteria": [
+        "Form layout identical to Add Book form",
+        "All fields pre-populated with current book data",
+        "Book ID and Last Updated date displayed in info banner at top",
+        "ISBN field is read-only with lock icon, cannot be modified",
+        "Cover image preview shows current cover with 'Change Image' button",
+        "All fields editable except ISBN, id, createdAt",
+        "Same validation rules as Add Book form",
+        "System auto-updates: updatedAt timestamp, isAvailable based on stockQuantity",
+        "No changes detection shows info toast without submitting",
+        "On successful update, navigate to Book Details with success toast",
+        "Cancel button returns to Book Details without saving"
+      ],
+      "requirements": ["FR-031", "FR-032", "FR-033", "FR-034", "FR-035", "FR-036", "FR-037", "FR-038", "FR-039", "FR-040"]
+    },
+    {
+      "featureId": "F005",
+      "featureName": "View Book Details",
+      "description": "Comprehensive book detail view with large cover image, metadata grid, rating display, price box, description, metadata bar, and action buttons",
+      "priority": "Must Have",
+      "category": "Core Functionality",
+      "complexity": "Medium",
+      "estimatedEffort": "4 days",
+      "dependencies": [],
+      "screens": ["Book Details (05_book_details_delete.svg)"],
+      "userStories": [
+        "As a user, I want to view all information about a book so that I can see comprehensive details in one place",
+        "As a user, I want to see the book cover prominently so that I can visually identify the book",
+        "As a user, I want to see the title, author, and rating clearly so that I can quickly identify the book and its popularity",
+        "As a user, I want to see pricing and availability so that I know if the book is in stock and affordable",
+        "As a user, I want to see all book metadata so that I have complete information",
+        "As a user, I want to read the book description so that I understand what the book is about",
+        "As a user, I want to see when the book was added and last updated so that I know data recency"
+      ],
+      "acceptanceCriteria": [
+        "Left column: Large cover image (~300x450px) with availability badge overlay",
+        "Availability badge shows 'In Stock' (green) or 'Out of Stock' (red)",
+        "Right column: Title (H1), Author, Rating (stars + numeric + review count), Price box, Details grid, Description",
+        "Rating displays as stars with decimal value (e.g., 4.2 / 5.0 with 1,234 reviews)",
+        "Price box shows current price, original price (if different), discount, stock quantity",
+        "Details grid shows: ISBN, Publisher, Publication Year, Language, Pages, Genre",
+        "Description displayed in text block, shows 'No description available' if empty",
+        "Metadata bar at bottom shows: Book ID, Added date, Last Updated date, View count",
+        "View count incremented automatically on page load",
+        "Action buttons at bottom: Edit Book (blue), Duplicate (orange), Export Data (gray), Delete Book (red)",
+        "Back button in top-right returns to Books List"
+      ],
+      "requirements": ["FR-041", "FR-042", "FR-043", "FR-044", "FR-045", "FR-046", "FR-047", "FR-048", "FR-049", "FR-050"]
+    },
+    {
+      "featureId": "F006",
+      "featureName": "Delete Book with Confirmation",
+      "description": "Safe book deletion with modal confirmation showing book details and warning message to prevent accidental deletions",
+      "priority": "Must Have",
+      "category": "Core Functionality",
+      "complexity": "Low",
+      "estimatedEffort": "2 days",
+      "dependencies": ["F005"],
+      "screens": ["Book Details with Delete Modal (05_book_details_delete.svg)"],
+      "userStories": [
+        "As a user, I want to delete books that are obsolete or incorrect so that the catalog remains accurate",
+        "As a user, I want to confirm deletion with book details shown so that I don't accidentally delete the wrong book",
+        "As a user, I want to cancel deletion if I change my mind so that the book is not deleted",
+        "As a user, I want to permanently delete the book when I confirm so that it is removed from the catalog"
+      ],
+      "acceptanceCriteria": [
+        "Red 'Delete Book' button on Book Details screen triggers modal",
+        "Modal centered with overlay dimming background",
+        "Modal title: '⚠ Confirm Delete' with warning icon",
+        "Modal body shows book Title and ISBN in highlighted box",
+        "Warning text: 'This action cannot be undone'",
+        "Two buttons: 'Cancel' (gray, left) and 'Delete Permanently' (red, right)",
+        "Cancel closes modal without deleting",
+        "ESC key closes modal without deleting",
+        "Clicking outside modal closes without deleting",
+        "Delete Permanently sends DELETE request to API",
+        "On success, show success toast and navigate to Books List",
+        "Deleted book no longer appears in list",
+        "Hard delete implementation (permanent removal from database)"
+      ],
+      "requirements": ["FR-051", "FR-052", "FR-053", "FR-054", "FR-055"]
+    },
+    {
+      "featureId": "F007",
+      "featureName": "Duplicate Book",
+      "description": "Create copy of existing book to speed up data entry for similar books, with automatic title suffix and required new ISBN",
+      "priority": "Could Have",
+      "category": "Productivity",
+      "complexity": "Low",
+      "estimatedEffort": "2 days",
+      "dependencies": ["F004", "F005"],
+      "screens": ["Book Details (05_book_details_delete.svg)", "Update Book Form (04_update_book_form.svg)"],
+      "userStories": [
+        "As a data entry clerk, I want to duplicate books so that I can quickly add similar books with minor changes",
+        "As a system, I want to create a duplicate book record so that user can make modifications before saving",
+        "As a user, I want to edit the duplicated book before final save so that I can provide unique ISBN and adjust details"
+      ],
+      "acceptanceCriteria": [
+        "Orange 'Duplicate' button on Book Details screen",
+        "Clicking Duplicate creates copy with all fields from original",
+        "Title appended with ' (Copy)' suffix",
+        "ISBN field cleared (must be unique, user must enter new ISBN)",
+        "New id, createdAt, updatedAt generated",
+        "viewCount, reviewCount, rating reset to 0/NULL",
+        "User navigated to Edit Book Form with duplicated book",
+        "User must provide new unique ISBN before saving",
+        "Cancel deletes the duplicate without saving"
+      ],
+      "requirements": ["FR-056", "FR-057", "FR-058"]
+    },
+    {
+      "featureId": "F008",
+      "featureName": "Export Book Data",
+      "description": "Download book information in JSON, CSV, or PDF format for external use, reporting, or backup",
+      "priority": "Could Have",
+      "category": "Data Management",
+      "complexity": "Medium",
+      "estimatedEffort": "3 days",
+      "dependencies": ["F005"],
+      "screens": ["Book Details (05_book_details_delete.svg)"],
+      "userStories": [
+        "As a user, I want to export book data so that I can use it in external systems or create reports",
+        "As a user, I want to choose export format so that I can use the data in different applications"
+      ],
+      "acceptanceCriteria": [
+        "Gray 'Export Data' button on Book Details screen",
+        "Clicking button triggers file download (default JSON format)",
+        "JSON format: Complete book object with all 18 fields",
+        "CSV format: Single-row CSV with headers for spreadsheet import",
+        "PDF format: Formatted document with cover image and all details",
+        "Filename format: book_{isbn}_{date}.{ext}",
+        "File downloaded to user's default download location",
+        "Format selection dropdown or query parameter support"
+      ],
+      "requirements": ["FR-059", "FR-060", "FR-061"]
+    },
+    {
+      "featureId": "F009",
+      "featureName": "Responsive Design",
+      "description": "Fully functional and visually appropriate layouts for mobile, tablet, and desktop devices with adaptive navigation and components",
+      "priority": "Should Have",
+      "category": "User Experience",
+      "complexity": "Medium",
+      "estimatedEffort": "4 days",
+      "dependencies": ["F001", "F002", "F003", "F004", "F005"],
+      "screens": ["All screens"],
+      "userStories": [
+        "As a mobile user, I want to use the app on my phone so that I can manage books on the go",
+        "As a tablet user, I want an optimized layout so that I can use the app comfortably on my tablet"
+      ],
+      "acceptanceCriteria": [
+        "Mobile (<768px): Single column forms, card layout for book list, hamburger menu",
+        "Tablet (768-1024px): 2-column forms maintained, scrollable table or reduced columns",
+        "Desktop (>1024px): Full wireframe layout as designed",
+        "Header adapts: Logo + search + action button scales appropriately",
+        "Filter dropdowns stack vertically on mobile",
+        "Navigation remains accessible on all devices",
+        "Touch targets minimum 44x44px on mobile",
+        "Text remains readable at all sizes",
+        "Images scale appropriately without distortion"
+      ],
+      "requirements": ["NFR-025"]
+    },
+    {
+      "featureId": "F010",
+      "featureName": "Loading States and User Feedback",
+      "description": "Comprehensive loading indicators, success/error notifications, empty states, and visual feedback for all user actions",
+      "priority": "Must Have",
+      "category": "User Experience",
+      "complexity": "Low",
+      "estimatedEffort": "3 days",
+      "dependencies": [],
+      "screens": ["All screens"],
+      "userStories": [
+        "As a user, I want to see loading indicators so that I know the system is processing my request",
+        "As a user, I want success messages so that I know my action completed",
+        "As a user, I want error messages so that I understand what went wrong and how to fix it"
+      ],
+      "acceptanceCriteria": [
+        "Loading states: Skeleton loaders for tables, spinners for forms, disabled buttons during submission",
+        "Success toasts: 'Book added successfully!', 'Book updated successfully!', 'Book deleted permanently'",
+        "Error toasts: Specific error messages for validation, network errors, server errors",
+        "Empty states: 'No books yet. Add your first book!', 'No books found', 'No books match your filters'",
+        "Button states: Disabled state with visual indicator, loading text ('Saving...', 'Updating...')",
+        "Form validation: Inline error messages below fields on blur or submit",
+        "Hover states: Buttons and interactive elements show hover feedback",
+        "Focus states: Keyboard navigation shows clear focus indicators",
+        "Progress indicators for file uploads"
+      ],
+      "requirements": ["NFR-028", "NFR-029"]
+    },
+    {
+      "featureId": "F011",
+      "featureName": "Accessibility (WCAG 2.1 AA)",
+      "description": "Accessible user interface with keyboard navigation, screen reader support, ARIA labels, and sufficient color contrast",
+      "priority": "Should Have",
+      "category": "Accessibility",
+      "complexity": "Medium",
+      "estimatedEffort": "4 days",
+      "dependencies": ["F001", "F002", "F003", "F004", "F005"],
+      "screens": ["All screens"],
+      "userStories": [
+        "As a keyboard-only user, I want to navigate the entire app with keyboard so that I can use it without a mouse",
+        "As a screen reader user, I want proper labels and announcements so that I understand the interface",
+        "As a visually impaired user, I want sufficient color contrast so that I can read text easily"
+      ],
+      "acceptanceCriteria": [
+        "All interactive elements accessible via Tab key",
+        "Focus trap in modal dialogs",
+        "ESC key closes modals and dropdowns",
+        "Enter key submits forms and activates buttons",
+        "ARIA labels for all form inputs",
+        "ARIA role='dialog' for modals",
+        "ARIA live regions for toast notifications",
+        "Alt text for book cover images",
+        "Color contrast ratio >= 4.5:1 for normal text, >= 3:1 for large text",
+        "Form validation errors announced to screen readers",
+        "Skip to main content link for keyboard users",
+        "Semantic HTML (header, nav, main, footer, article)",
+        "Passes automated accessibility testing (axe, Lighthouse)"
+      ],
+      "requirements": ["NFR-026"]
+    },
+    {
+      "featureId": "F012",
+      "featureName": "Performance Optimization",
+      "description": "Fast page loads, quick API responses, optimized images, and efficient database queries for responsive user experience",
+      "priority": "Must Have",
+      "category": "Performance",
+      "complexity": "Medium",
+      "estimatedEffort": "3 days",
+      "dependencies": [],
+      "screens": ["All screens"],
+      "userStories": [
+        "As a user, I want pages to load quickly so that I don't waste time waiting",
+        "As a user, I want search results to appear instantly so that I can find books efficiently"
+      ],
+      "acceptanceCriteria": [
+        "Page load time <2 seconds for all screens",
+        "API response time <500ms for 95% of requests",
+        "Search results returned <1 second for collections up to 10,000 books",
+        "Images lazy loaded with progressive loading",
+        "Code splitting and lazy loading for routes",
+        "Database indexes on frequently queried columns (title, author, genre, year, isbn)",
+        "Query optimization to avoid N+1 problems",
+        "Connection pooling configured (HikariCP)",
+        "Pagination limits result set size",
+        "Debounced search input (300ms) to reduce API calls",
+        "Cumulative Layout Shift (CLS) <0.1",
+        "First Contentful Paint (FCP) <1.5s",
+        "Lighthouse performance score >90"
+      ],
+      "requirements": ["NFR-001", "NFR-002", "NFR-003", "NFR-004", "NFR-005", "NFR-006"]
+    }
+  ],
+  "summary": {
+    "totalFeatures": 12,
+    "mustHave": 7,
+    "shouldHave": 4,
+    "couldHave": 1,
+    "wontHave": 0,
+    "totalEstimatedEffort": "48 days",
+    "categories": {
+      "coreFunctionality": 5,
+      "searchAndDiscovery": 1,
+      "productivity": 1,
+      "dataManagement": 1,
+      "userExperience": 2,
+      "accessibility": 1,
+      "performance": 1
+    },
+    "complexity": {
+      "high": 3,
+      "medium": 6,
+      "low": 3
+    }
+  }
+}

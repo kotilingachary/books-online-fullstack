@@ -1,0 +1,1209 @@
+openapi: 3.0.3
+info:
+  title: Books Online API
+  description: |
+    REST API for Books Online - Book Management System
+
+    ## Overview
+    Books Online is a comprehensive book management system that allows users to:
+    - Browse and search books with advanced filtering
+    - Create, read, update, and delete book records
+    - Export book data in multiple formats (JSON, CSV, PDF)
+    - Duplicate existing books for quick entry
+
+    ## Version Information
+    - **V1 (Current)**: No authentication - Open access for development/demo
+    - **V2 (Future)**: JWT-based authentication with role-based access control
+
+    ## Base URL
+    - Development: `http://localhost:8080/api/v1`
+    - Production: `https://api.booksonline.com/v1`
+
+    ## Data Format
+    - All requests and responses use `application/json`
+    - Dates in ISO 8601 format (UTC): `2026-02-11T10:30:00Z`
+    - Field names in camelCase
+
+    ## Pagination
+    List endpoints support pagination with query parameters:
+    - `page` (default: 0) - Page number (0-indexed)
+    - `size` (default: 4) - Items per page
+    - `sort` (default: id,asc) - Sort field and direction
+
+    ## Error Handling
+    All errors return a consistent structure with:
+    - HTTP status code
+    - Error message
+    - Timestamp
+    - Request path
+    - Validation errors (if applicable)
+
+  version: 1.0.0
+  contact:
+    name: Books Online API Support
+    email: support@booksonline.com
+    url: https://booksonline.com/support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Development server (H2 database)
+  - url: https://api.booksonline.com/v1
+    description: Production server (PostgreSQL database)
+
+tags:
+  - name: Books
+    description: Book management operations (CRUD)
+  - name: Search
+    description: Advanced book search and filtering
+  - name: Actions
+    description: Special actions (duplicate, export)
+
+paths:
+  /books:
+    get:
+      tags:
+        - Books
+      summary: List all books
+      description: |
+        Retrieve a paginated list of all books with optional sorting.
+
+        **Features:**
+        - Pagination support (default: 4 items per page)
+        - Multi-field sorting
+        - Returns book metadata including cover, ratings, availability
+
+        **Use Cases:**
+        - Display book list on homepage
+        - Browse all books in catalog
+        - Implement infinite scroll
+
+      operationId: getAllBooks
+      parameters:
+        - name: page
+          in: query
+          description: Page number (0-indexed)
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+            example: 0
+        - name: size
+          in: query
+          description: Number of items per page (1-100)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 4
+            example: 4
+        - name: sort
+          in: query
+          description: |
+            Sort field and direction. Format: `field,direction`
+            Multiple sort parameters supported.
+
+            **Examples:**
+            - `title,asc` - Sort by title ascending
+            - `publicationYear,desc` - Sort by year descending
+            - `rating,desc` - Sort by rating descending
+          required: false
+          schema:
+            type: string
+            default: id,asc
+            example: title,asc
+      responses:
+        '200':
+          description: Successfully retrieved book list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookPageResponse'
+              examples:
+                success:
+                  summary: Successful response with 2 books
+                  value:
+                    content:
+                      - id: 1
+                        title: "Clean Code"
+                        isbn: "978-0132350884"
+                        author: "Robert C. Martin"
+                        publisher: "Prentice Hall"
+                        genre: "Programming"
+                        publicationYear: 2008
+                        pages: 464
+                        language: "English"
+                        price: 44.99
+                        stockQuantity: 15
+                        description: "A handbook of agile software craftsmanship"
+                        coverImageUrl: "https://example.com/covers/clean-code.jpg"
+                        rating: 4.7
+                        reviewCount: 1250
+                        viewCount: 523
+                        isAvailable: true
+                        createdAt: "2026-01-15T10:30:00Z"
+                        updatedAt: "2026-02-10T14:20:00Z"
+                      - id: 2
+                        title: "Design Patterns"
+                        isbn: "978-0201633610"
+                        author: "Erich Gamma"
+                        publisher: "Addison-Wesley"
+                        genre: "Programming"
+                        publicationYear: 1994
+                        pages: 416
+                        language: "English"
+                        price: 54.99
+                        stockQuantity: 8
+                        description: "Elements of reusable object-oriented software"
+                        coverImageUrl: "https://example.com/covers/design-patterns.jpg"
+                        rating: 4.6
+                        reviewCount: 890
+                        viewCount: 412
+                        isAvailable: true
+                        createdAt: "2026-01-16T11:00:00Z"
+                        updatedAt: "2026-02-09T16:45:00Z"
+                    pageable:
+                      pageNumber: 0
+                      pageSize: 4
+                      offset: 0
+                    totalElements: 47
+                    totalPages: 12
+                    last: false
+                    first: true
+                    size: 4
+                    number: 0
+                    numberOfElements: 2
+                    empty: false
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                timestamp: "2026-02-11T10:30:00Z"
+                status: 500
+                error: "Internal Server Error"
+                message: "An unexpected error occurred"
+                path: "/api/v1/books"
+
+    post:
+      tags:
+        - Books
+      summary: Create a new book
+      description: |
+        Create a new book entry with provided data.
+
+        **Required Fields:**
+        - title, isbn, author, genre, publicationYear, language, isAvailable
+
+        **Optional Fields:**
+        - publisher, pages, price, stockQuantity, description, coverImageUrl, rating, reviewCount
+
+        **System-Managed Fields (Auto-Generated):**
+        - id, viewCount, createdAt, updatedAt
+
+        **Validation:**
+        - ISBN must be unique (409 error if duplicate)
+        - ISBN must be 10-20 characters
+        - Title max 200 characters
+        - Author max 100 characters
+        - Publication year between 1000-2100
+
+      operationId: createBook
+      requestBody:
+        description: Book data to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookRequest'
+            examples:
+              minimal:
+                summary: Minimal required fields
+                value:
+                  title: "Clean Architecture"
+                  isbn: "978-0134494166"
+                  author: "Robert C. Martin"
+                  genre: "Programming"
+                  publicationYear: 2017
+                  language: "English"
+                  isAvailable: true
+              complete:
+                summary: Complete book with all fields
+                value:
+                  title: "Clean Architecture"
+                  isbn: "978-0134494166"
+                  author: "Robert C. Martin"
+                  publisher: "Prentice Hall"
+                  genre: "Programming"
+                  publicationYear: 2017
+                  pages: 432
+                  language: "English"
+                  price: 39.99
+                  stockQuantity: 25
+                  description: "A craftsman's guide to software structure and design"
+                  coverImageUrl: "https://example.com/covers/clean-architecture.jpg"
+                  rating: 4.6
+                  reviewCount: 0
+                  isAvailable: true
+      responses:
+        '201':
+          description: Book created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+              example:
+                id: 456
+                title: "Clean Architecture"
+                isbn: "978-0134494166"
+                author: "Robert C. Martin"
+                publisher: null
+                genre: "Programming"
+                publicationYear: 2017
+                pages: null
+                language: "English"
+                price: null
+                stockQuantity: 0
+                description: null
+                coverImageUrl: null
+                rating: null
+                reviewCount: 0
+                viewCount: 0
+                isAvailable: true
+                createdAt: "2026-02-11T10:30:00Z"
+                updatedAt: "2026-02-11T10:30:00Z"
+        '400':
+          description: Invalid input or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              example:
+                timestamp: "2026-02-11T10:30:00Z"
+                status: 400
+                error: "Bad Request"
+                message: "Validation failed"
+                errors:
+                  - field: "title"
+                    rejectedValue: ""
+                    message: "Title is required"
+                  - field: "isbn"
+                    rejectedValue: "123"
+                    message: "ISBN must be between 10 and 20 characters"
+                path: "/api/v1/books"
+        '409':
+          description: ISBN already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                timestamp: "2026-02-11T10:30:00Z"
+                status: 409
+                error: "Conflict"
+                message: "Book with ISBN 978-0134494166 already exists"
+                path: "/api/v1/books"
+
+  /books/{id}:
+    get:
+      tags:
+        - Books
+      summary: Get book by ID
+      description: |
+        Retrieve a single book by its ID.
+
+        **Side Effects:**
+        - Increments the book's view count automatically
+
+        **Use Cases:**
+        - Display book details page
+        - View full book information
+        - Track book popularity (via view count)
+
+      operationId: getBookById
+      parameters:
+        - name: id
+          in: path
+          description: Book ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
+      responses:
+        '200':
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+              example:
+                id: 123
+                title: "The Pragmatic Programmer"
+                isbn: "978-0135957059"
+                author: "David Thomas, Andrew Hunt"
+                publisher: "Addison-Wesley"
+                genre: "Programming"
+                publicationYear: 2019
+                pages: 352
+                language: "English"
+                price: 49.99
+                stockQuantity: 20
+                description: "From journeyman to master. Your journey to mastery..."
+                coverImageUrl: "https://example.com/covers/pragmatic-programmer.jpg"
+                rating: 4.8
+                reviewCount: 1500
+                viewCount: 750
+                isAvailable: true
+                createdAt: "2026-01-10T09:00:00Z"
+                updatedAt: "2026-02-11T10:15:00Z"
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                timestamp: "2026-02-11T10:30:00Z"
+                status: 404
+                error: "Not Found"
+                message: "Book not found with id: 123"
+                path: "/api/v1/books/123"
+
+    put:
+      tags:
+        - Books
+      summary: Update book
+      description: |
+        Update an existing book's information.
+
+        **Notes:**
+        - ISBN cannot be changed (immutable)
+        - If ISBN provided in request body, it will be ignored
+        - All other fields can be updated
+        - Updates the `updatedAt` timestamp automatically
+
+        **Use Cases:**
+        - Edit book details
+        - Update stock quantity
+        - Correct book information
+
+      operationId: updateBook
+      parameters:
+        - name: id
+          in: path
+          description: Book ID to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 456
+      requestBody:
+        description: Updated book data (ISBN ignored if provided)
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookRequest'
+            example:
+              title: "Clean Architecture (Updated Edition)"
+              author: "Robert C. Martin"
+              genre: "Software Engineering"
+              publicationYear: 2017
+              language: "English"
+              price: 44.99
+              stockQuantity: 30
+              isAvailable: true
+      responses:
+        '200':
+          description: Book updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+              example:
+                id: 456
+                title: "Clean Architecture (Updated Edition)"
+                isbn: "978-0134494166"
+                author: "Robert C. Martin"
+                publisher: null
+                genre: "Software Engineering"
+                publicationYear: 2017
+                pages: null
+                language: "English"
+                price: 44.99
+                stockQuantity: 30
+                description: null
+                coverImageUrl: null
+                rating: null
+                reviewCount: 0
+                viewCount: 0
+                isAvailable: true
+                createdAt: "2026-02-11T10:30:00Z"
+                updatedAt: "2026-02-11T11:15:00Z"
+        '400':
+          description: Invalid input or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                timestamp: "2026-02-11T11:15:00Z"
+                status: 404
+                error: "Not Found"
+                message: "Book not found with id: 456"
+                path: "/api/v1/books/456"
+
+    delete:
+      tags:
+        - Books
+      summary: Delete book
+      description: |
+        Permanently delete a book from the database.
+
+        **Warning:**
+        - This operation is irreversible
+        - All book data will be permanently removed
+        - Consider implementing soft delete in production
+
+        **Use Cases:**
+        - Remove discontinued books
+        - Clean up test data
+        - Delete duplicate entries
+
+      operationId: deleteBook
+      parameters:
+        - name: id
+          in: path
+          description: Book ID to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 456
+      responses:
+        '204':
+          description: Book deleted successfully (no content returned)
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                timestamp: "2026-02-11T11:20:00Z"
+                status: 404
+                error: "Not Found"
+                message: "Book not found with id: 456"
+                path: "/api/v1/books/456"
+
+  /books/search:
+    get:
+      tags:
+        - Search
+      summary: Advanced search books
+      description: |
+        Search books with multiple filter criteria.
+
+        **Quick Search:**
+        - Use `q` parameter to search across title, author, and ISBN
+
+        **Advanced Filters:**
+        - **Text filters**: title, author, isbn, publisher (partial match, case-insensitive)
+        - **Exact filters**: genre, language, isAvailable
+        - **Range filters**: minYear/maxYear, minPrice/maxPrice
+        - **Boolean filters**: inStock, onSale, newReleases
+
+        **Filter Logic:**
+        - All filters use AND logic
+        - Example: genre=Programming AND minYear=2010 AND maxYear=2023
+
+        **Use Cases:**
+        - Search bar functionality
+        - Advanced search page
+        - Filter books by category
+        - Find books within price range
+
+      operationId: searchBooks
+      parameters:
+        - name: q
+          in: query
+          description: Quick search across title, author, ISBN
+          required: false
+          schema:
+            type: string
+            example: "clean code"
+        - name: title
+          in: query
+          description: Filter by title (partial match, case-insensitive)
+          required: false
+          schema:
+            type: string
+            example: "Clean"
+        - name: author
+          in: query
+          description: Filter by author (partial match, case-insensitive)
+          required: false
+          schema:
+            type: string
+            example: "Martin"
+        - name: isbn
+          in: query
+          description: Filter by ISBN (exact match)
+          required: false
+          schema:
+            type: string
+            example: "978-0132350884"
+        - name: publisher
+          in: query
+          description: Filter by publisher (partial match)
+          required: false
+          schema:
+            type: string
+            example: "Prentice Hall"
+        - name: genre
+          in: query
+          description: Filter by genre (exact match)
+          required: false
+          schema:
+            type: string
+            example: "Programming"
+        - name: language
+          in: query
+          description: Filter by language (exact match)
+          required: false
+          schema:
+            type: string
+            example: "English"
+        - name: minYear
+          in: query
+          description: Minimum publication year
+          required: false
+          schema:
+            type: integer
+            minimum: 1000
+            maximum: 2100
+            example: 2010
+        - name: maxYear
+          in: query
+          description: Maximum publication year
+          required: false
+          schema:
+            type: integer
+            minimum: 1000
+            maximum: 2100
+            example: 2023
+        - name: minPrice
+          in: query
+          description: Minimum price
+          required: false
+          schema:
+            type: number
+            format: double
+            minimum: 0
+            example: 30.00
+        - name: maxPrice
+          in: query
+          description: Maximum price
+          required: false
+          schema:
+            type: number
+            format: double
+            example: 60.00
+        - name: inStock
+          in: query
+          description: Filter books with stock > 0
+          required: false
+          schema:
+            type: boolean
+            example: true
+        - name: onSale
+          in: query
+          description: Filter books with discount
+          required: false
+          schema:
+            type: boolean
+            example: false
+        - name: newReleases
+          in: query
+          description: Filter books from last year
+          required: false
+          schema:
+            type: boolean
+            example: false
+        - name: isAvailable
+          in: query
+          description: Filter by availability status
+          required: false
+          schema:
+            type: boolean
+            example: true
+        - name: sort
+          in: query
+          description: Sort field and direction (e.g., title,asc, rating,desc)
+          required: false
+          schema:
+            type: string
+            default: id,asc
+            example: "rating,desc"
+        - name: page
+          in: query
+          description: Page number (0-indexed)
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+            example: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+            example: 10
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookPageResponse'
+              example:
+                content:
+                  - id: 1
+                    title: "Clean Code"
+                    isbn: "978-0132350884"
+                    author: "Robert C. Martin"
+                    genre: "Programming"
+                    publicationYear: 2008
+                    price: 44.99
+                    rating: 4.7
+                    isAvailable: true
+                pageable:
+                  pageNumber: 0
+                  pageSize: 10
+                totalElements: 15
+                totalPages: 2
+                last: false
+                first: true
+
+  /books/{id}/duplicate:
+    post:
+      tags:
+        - Actions
+      summary: Duplicate book
+      description: |
+        Create a copy of an existing book.
+
+        **Modifications to Duplicate:**
+        - Title appended with " (Copy)"
+        - ISBN cleared (must be entered manually)
+        - Review count reset to 0
+        - View count reset to 0
+        - All other fields copied from original
+
+        **Typical Workflow:**
+        1. User clicks duplicate button
+        2. Backend creates copy with modifications
+        3. Frontend navigates to edit form
+        4. User enters new unique ISBN
+        5. User saves the book
+
+        **Use Cases:**
+        - Create book variations (different editions)
+        - Quick entry of similar books
+        - Template for new entries
+
+      operationId: duplicateBook
+      parameters:
+        - name: id
+          in: path
+          description: Book ID to duplicate
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
+      responses:
+        '201':
+          description: Book duplicated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+              example:
+                id: 789
+                title: "The Pragmatic Programmer (Copy)"
+                isbn: ""
+                author: "David Thomas, Andrew Hunt"
+                publisher: "Addison-Wesley"
+                genre: "Programming"
+                publicationYear: 2019
+                pages: 352
+                language: "English"
+                price: 49.99
+                stockQuantity: 20
+                description: "From journeyman to master. Your journey to mastery..."
+                coverImageUrl: "https://example.com/covers/pragmatic-programmer.jpg"
+                rating: 4.8
+                reviewCount: 0
+                viewCount: 0
+                isAvailable: true
+                createdAt: "2026-02-11T11:30:00Z"
+                updatedAt: "2026-02-11T11:30:00Z"
+        '404':
+          description: Original book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /books/{id}/export:
+    get:
+      tags:
+        - Actions
+      summary: Export book data
+      description: |
+        Export book data in various formats.
+
+        **Supported Formats:**
+        - **JSON**: Complete book object
+        - **CSV**: Spreadsheet-compatible format
+        - **PDF**: Formatted document with cover image
+
+        **PDF Layout:**
+        - Cover image (if available)
+        - Title, author, ISBN prominently displayed
+        - All metadata in formatted table
+        - Description section
+        - Footer with export date
+
+        **Use Cases:**
+        - Download book details
+        - Share book information
+        - Create backup
+        - Generate printable catalog
+
+      operationId: exportBook
+      parameters:
+        - name: id
+          in: path
+          description: Book ID to export
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
+        - name: format
+          in: query
+          description: Export format (json, csv, pdf)
+          required: false
+          schema:
+            type: string
+            enum: [json, csv, pdf]
+            default: json
+            example: json
+      responses:
+        '200':
+          description: Export successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+              example:
+                id: 123
+                title: "The Pragmatic Programmer"
+                isbn: "978-0135957059"
+                author: "David Thomas, Andrew Hunt"
+            text/csv:
+              schema:
+                type: string
+              example: |
+                id,title,isbn,author,publisher,genre,publicationYear,pages,language,price,stockQuantity,description,coverImageUrl,rating,reviewCount,viewCount,isAvailable,createdAt,updatedAt
+                123,"The Pragmatic Programmer","978-0135957059","David Thomas, Andrew Hunt","Addison-Wesley","Programming",2019,352,"English",49.99,20,"From journeyman to master...","https://example.com/covers/pragmatic-programmer.jpg",4.8,1500,750,true,"2026-01-10T09:00:00Z","2026-02-11T10:15:00Z"
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    BookRequest:
+      type: object
+      required:
+        - title
+        - isbn
+        - author
+        - genre
+        - publicationYear
+        - language
+        - isAvailable
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Book title
+          example: "Clean Code"
+        isbn:
+          type: string
+          minLength: 10
+          maxLength: 20
+          description: International Standard Book Number (must be unique)
+          example: "978-0132350884"
+        author:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Author name(s)
+          example: "Robert C. Martin"
+        publisher:
+          type: string
+          maxLength: 100
+          nullable: true
+          description: Publisher name
+          example: "Prentice Hall"
+        genre:
+          type: string
+          minLength: 1
+          maxLength: 50
+          description: Book genre/category
+          example: "Programming"
+        publicationYear:
+          type: integer
+          minimum: 1000
+          maximum: 2100
+          description: Year of publication
+          example: 2008
+        pages:
+          type: integer
+          minimum: 1
+          nullable: true
+          description: Number of pages
+          example: 464
+        language:
+          type: string
+          minLength: 1
+          maxLength: 30
+          description: Primary language of the book
+          example: "English"
+        price:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 9999.99
+          nullable: true
+          description: Book price
+          example: 44.99
+        stockQuantity:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Available stock quantity
+          example: 15
+          default: 0
+        description:
+          type: string
+          maxLength: 2000
+          nullable: true
+          description: Book description/summary
+          example: "A handbook of agile software craftsmanship"
+        coverImageUrl:
+          type: string
+          maxLength: 500
+          nullable: true
+          description: URL to book cover image
+          example: "https://example.com/covers/clean-code.jpg"
+        rating:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 5
+          nullable: true
+          description: Average rating (0-5 stars)
+          example: 4.7
+        reviewCount:
+          type: integer
+          minimum: 0
+          nullable: true
+          description: Number of reviews
+          example: 1250
+          default: 0
+        isAvailable:
+          type: boolean
+          description: Availability status
+          example: true
+          default: true
+
+    BookResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique book identifier (auto-generated)
+          example: 1
+        title:
+          type: string
+          description: Book title
+          example: "Clean Code"
+        isbn:
+          type: string
+          description: International Standard Book Number
+          example: "978-0132350884"
+        author:
+          type: string
+          description: Author name(s)
+          example: "Robert C. Martin"
+        publisher:
+          type: string
+          nullable: true
+          description: Publisher name
+          example: "Prentice Hall"
+        genre:
+          type: string
+          description: Book genre/category
+          example: "Programming"
+        publicationYear:
+          type: integer
+          description: Year of publication
+          example: 2008
+        pages:
+          type: integer
+          nullable: true
+          description: Number of pages
+          example: 464
+        language:
+          type: string
+          description: Primary language
+          example: "English"
+        price:
+          type: number
+          format: double
+          nullable: true
+          description: Book price
+          example: 44.99
+        stockQuantity:
+          type: integer
+          description: Available stock
+          example: 15
+        description:
+          type: string
+          nullable: true
+          description: Book description
+          example: "A handbook of agile software craftsmanship"
+        coverImageUrl:
+          type: string
+          nullable: true
+          description: Cover image URL
+          example: "https://example.com/covers/clean-code.jpg"
+        rating:
+          type: number
+          format: double
+          nullable: true
+          description: Average rating (0-5)
+          example: 4.7
+        reviewCount:
+          type: integer
+          description: Number of reviews
+          example: 1250
+        viewCount:
+          type: integer
+          description: Number of times viewed (auto-incremented)
+          example: 523
+        isAvailable:
+          type: boolean
+          description: Availability status
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp (auto-generated)
+          example: "2026-01-15T10:30:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp (auto-updated)
+          example: "2026-02-10T14:20:00Z"
+
+    BookPageResponse:
+      type: object
+      description: Paginated book list response (Spring Data JPA Page format)
+      properties:
+        content:
+          type: array
+          description: Array of books for current page
+          items:
+            $ref: '#/components/schemas/BookResponse'
+        pageable:
+          type: object
+          description: Pagination metadata
+          properties:
+            pageNumber:
+              type: integer
+              description: Current page number (0-indexed)
+              example: 0
+            pageSize:
+              type: integer
+              description: Number of items per page
+              example: 4
+            offset:
+              type: integer
+              description: Starting index of current page
+              example: 0
+            sort:
+              type: object
+              properties:
+                sorted:
+                  type: boolean
+                  example: true
+                unsorted:
+                  type: boolean
+                  example: false
+                empty:
+                  type: boolean
+                  example: false
+        totalElements:
+          type: integer
+          description: Total number of books across all pages
+          example: 47
+        totalPages:
+          type: integer
+          description: Total number of pages
+          example: 12
+        last:
+          type: boolean
+          description: Is this the last page?
+          example: false
+        first:
+          type: boolean
+          description: Is this the first page?
+          example: true
+        size:
+          type: integer
+          description: Page size
+          example: 4
+        number:
+          type: integer
+          description: Current page number (0-indexed)
+          example: 0
+        numberOfElements:
+          type: integer
+          description: Number of elements on current page
+          example: 4
+        empty:
+          type: boolean
+          description: Is the current page empty?
+          example: false
+
+    ErrorResponse:
+      type: object
+      description: Standard error response format
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+          example: "2026-02-11T10:30:00Z"
+        status:
+          type: integer
+          description: HTTP status code
+          example: 404
+        error:
+          type: string
+          description: HTTP status reason phrase
+          example: "Not Found"
+        message:
+          type: string
+          description: Error message
+          example: "Book not found with id: 123"
+        path:
+          type: string
+          description: Request path that caused the error
+          example: "/api/v1/books/123"
+
+    ValidationErrorResponse:
+      type: object
+      description: Validation error response with field-level errors
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+          example: "2026-02-11T10:30:00Z"
+        status:
+          type: integer
+          description: HTTP status code (400)
+          example: 400
+        error:
+          type: string
+          description: HTTP status reason phrase
+          example: "Bad Request"
+        message:
+          type: string
+          description: General error message
+          example: "Validation failed"
+        errors:
+          type: array
+          description: Array of field-level validation errors
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field name that failed validation
+                example: "title"
+              rejectedValue:
+                type: string
+                description: Value that was rejected
+                example: ""
+              message:
+                type: string
+                description: Validation error message
+                example: "Title is required"
+        path:
+          type: string
+          description: Request path
+          example: "/api/v1/books"
+
+  # V1: No authentication (open access)
+  # V2: JWT bearer authentication (future)
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        **V1 (Current):** Not implemented - all endpoints are open access
+
+        **V2 (Future):** JWT-based authentication
+        - Obtain JWT token via login endpoint
+        - Include in Authorization header: `Bearer <token>`
+        - Token expires in 1 hour
+        - Refresh token mechanism available
+
+# V1: No security applied (all endpoints open)
+# V2: Apply bearerAuth to all endpoints
+security: []

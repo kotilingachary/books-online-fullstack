@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#F5F5F5"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="80" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="40" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333333">Books Online</text>
+
+  <!-- Back to List Button -->
+  <rect x="1040" y="25" width="120" height="30" fill="#EEEEEE" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="1065" y="47" font-family="Arial, sans-serif" font-size="14" fill="#333333">← Back</text>
+
+  <!-- Main Details Container -->
+  <rect x="150" y="130" width="900" height="700" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" rx="8"/>
+
+  <!-- Book Cover and Main Info Section -->
+  <rect x="200" y="170" width="250" height="350" fill="#EEEEEE" stroke="#CCCCCC" stroke-width="2" rx="4"/>
+  <text x="325" y="340" font-family="Arial, sans-serif" font-size="16" fill="#666666" text-anchor="middle">[Book Cover Image]</text>
+  <text x="325" y="360" font-family="Arial, sans-serif" font-size="13" fill="#999999" text-anchor="middle">The Great Gatsby</text>
+
+  <!-- Availability Badge -->
+  <rect x="220" y="190" width="80" height="25" fill="#4CAF50" stroke="none" rx="12"/>
+  <text x="260" y="208" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">In Stock</text>
+
+  <!-- Book Details -->
+  <text x="500" y="200" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#333333">The Great Gatsby</text>
+  <text x="500" y="225" font-family="Arial, sans-serif" font-size="16" fill="#666666">by F. Scott Fitzgerald</text>
+
+  <!-- Rating Stars -->
+  <text x="500" y="255" font-family="Arial, sans-serif" font-size="18" fill="#FFC107">★★★★☆</text>
+  <text x="610" y="255" font-family="Arial, sans-serif" font-size="13" fill="#666666">(4.2 / 5.0 - 1,234 reviews)</text>
+
+  <!-- Price and Stock Info -->
+  <rect x="500" y="275" width="500" height="60" fill="#F9F9F9" stroke="#E0E0E0" stroke-width="1" rx="4"/>
+  <text x="520" y="300" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#555555">Price:</text>
+  <text x="580" y="300" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#4CAF50">$15.99</text>
+  <text x="670" y="300" font-family="Arial, sans-serif" font-size="13" fill="#999999" text-decoration="line-through">$19.99</text>
+  <text x="740" y="300" font-family="Arial, sans-serif" font-size="12" fill="#FF5722">(20% OFF)</text>
+  <text x="520" y="322" font-family="Arial, sans-serif" font-size="13" fill="#666666">Stock: 42 copies available</text>
+
+  <!-- Details Grid -->
+  <line x1="500" y1="355" x2="1000" y2="355" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- ISBN -->
+  <text x="500" y="380" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">ISBN:</text>
+  <text x="650" y="380" font-family="Arial, sans-serif" font-size="13" fill="#333333">978-0-7432-7356-5</text>
+
+  <!-- Publisher -->
+  <text x="500" y="405" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Publisher:</text>
+  <text x="650" y="405" font-family="Arial, sans-serif" font-size="13" fill="#333333">Scribner</text>
+
+  <!-- Publication Date -->
+  <text x="500" y="430" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Publication Year:</text>
+  <text x="650" y="430" font-family="Arial, sans-serif" font-size="13" fill="#333333">1925</text>
+
+  <!-- Language -->
+  <text x="500" y="455" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Language:</text>
+  <text x="650" y="455" font-family="Arial, sans-serif" font-size="13" fill="#333333">English</text>
+
+  <!-- Pages -->
+  <text x="500" y="480" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Pages:</text>
+  <text x="650" y="480" font-family="Arial, sans-serif" font-size="13" fill="#333333">180 pages</text>
+
+  <!-- Genre -->
+  <text x="500" y="505" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Genre:</text>
+  <rect x="650" y="490" width="60" height="20" fill="#E3F2FD" stroke="none" rx="10"/>
+  <text x="680" y="504" font-family="Arial, sans-serif" font-size="11" fill="#1976D2" text-anchor="middle">Fiction</text>
+
+  <!-- Description Section -->
+  <line x1="200" y1="545" x2="1000" y2="545" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="200" y="575" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333333">Description</text>
+  <text x="200" y="600" font-family="Arial, sans-serif" font-size="13" fill="#555555">A classic American novel set in the Jazz Age that tells the story of the mysterious millionaire</text>
+  <text x="200" y="618" font-family="Arial, sans-serif" font-size="13" fill="#555555">Jay Gatsby and his obsession with the beautiful former debutante Daisy Buchanan. Through</text>
+  <text x="200" y="636" font-family="Arial, sans-serif" font-size="13" fill="#555555">the eyes of narrator Nick Carraway, Fitzgerald paints a vivid portrait of the Roaring Twenties</text>
+  <text x="200" y="654" font-family="Arial, sans-serif" font-size="13" fill="#555555">and explores themes of wealth, love, and the American Dream.</text>
+
+  <!-- Metadata Section -->
+  <line x1="200" y1="680" x2="1000" y2="680" stroke="#E0E0E0" stroke-width="1"/>
+  <rect x="200" y="690" width="800" height="30" fill="#F5F5F5" stroke="none" rx="4"/>
+  <text x="215" y="711" font-family="Arial, sans-serif" font-size="11" fill="#999999">Book ID: BK-2024-001234 | Added: 2023-12-10 | Last Updated: 2024-01-15 | Views: 3,456</text>
+
+  <!-- Action Buttons -->
+  <rect x="200" y="750" width="180" height="40" fill="#2196F3" stroke="none" rx="4"/>
+  <text x="290" y="775" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Edit Book</text>
+
+  <rect x="400" y="750" width="180" height="40" fill="#FF9800" stroke="none" rx="4"/>
+  <text x="490" y="775" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Duplicate</text>
+
+  <rect x="600" y="750" width="180" height="40" fill="#9E9E9E" stroke="none" rx="4"/>
+  <text x="690" y="775" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Export Data</text>
+
+  <rect x="820" y="750" width="180" height="40" fill="#F44336" stroke="none" rx="4"/>
+  <text x="910" y="775" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Delete Book</text>
+
+  <!-- Delete Confirmation Modal (Overlay) -->
+  <rect x="0" y="0" width="1200" height="900" fill="#000000" opacity="0.5"/>
+
+  <!-- Modal Dialog -->
+  <rect x="350" y="300" width="500" height="250" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="2" rx="8"/>
+
+  <!-- Modal Header -->
+  <rect x="350" y="300" width="500" height="50" fill="#F44336" stroke="none" rx="8"/>
+  <rect x="350" y="325" width="500" height="25" fill="#F44336" stroke="none"/>
+  <text x="600" y="332" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">⚠ Confirm Delete</text>
+
+  <!-- Modal Content -->
+  <text x="600" y="395" font-family="Arial, sans-serif" font-size="15" fill="#333333" text-anchor="middle">Are you sure you want to delete this book?</text>
+  <rect x="400" y="410" width="400" height="50" fill="#FFF3E0" stroke="#FFB74D" stroke-width="1" rx="4"/>
+  <text x="600" y="432" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#E65100" text-anchor="middle">The Great Gatsby</text>
+  <text x="600" y="448" font-family="Arial, sans-serif" font-size="12" fill="#F57C00" text-anchor="middle">ISBN: 978-0-7432-7356-5</text>
+
+  <text x="600" y="485" font-family="Arial, sans-serif" font-size="13" fill="#666666" text-anchor="middle">This action cannot be undone.</text>
+
+  <!-- Modal Buttons -->
+  <rect x="380" y="505" width="180" height="35" fill="#9E9E9E" stroke="none" rx="4"/>
+  <text x="470" y="528" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Cancel</text>
+
+  <rect x="640" y="505" width="180" height="35" fill="#F44336" stroke="none" rx="4"/>
+  <text x="730" y="528" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Delete Permanently</text>
+
+  <!-- Footer -->
+  <rect x="0" y="860" width="1200" height="40" fill="#333333" stroke="none" opacity="1"/>
+  <text x="40" y="885" font-family="Arial, sans-serif" font-size="12" fill="#FFFFFF">© 2024 Books Online. All rights reserved.</text>
+</svg>

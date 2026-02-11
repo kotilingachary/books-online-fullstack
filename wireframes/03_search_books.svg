@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#F5F5F5"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="80" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="40" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333333">Books Online</text>
+
+  <!-- Back Button -->
+  <rect x="1040" y="25" width="120" height="30" fill="#EEEEEE" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="1070" y="47" font-family="Arial, sans-serif" font-size="14" fill="#333333">← Back</text>
+
+  <!-- Main Search Container -->
+  <rect x="150" y="130" width="900" height="700" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" rx="8"/>
+
+  <!-- Page Title -->
+  <text x="600" y="180" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#333333" text-anchor="middle">Search Books</text>
+  <line x1="200" y1="200" x2="1000" y2="200" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- Main Search Bar -->
+  <text x="200" y="240" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#555555">Quick Search</text>
+  <rect x="200" y="250" width="700" height="45" fill="#FFFFFF" stroke="#2196F3" stroke-width="2" rx="6"/>
+  <text x="220" y="277" font-family="Arial, sans-serif" font-size="15" fill="#999999">Search by title, author, ISBN, or keyword...</text>
+  <circle cx="860" cy="272.5" r="15" fill="none" stroke="#2196F3" stroke-width="2"/>
+  <line x1="872" y1="284.5" x2="885" y2="297.5" stroke="#2196F3" stroke-width="2"/>
+
+  <rect x="920" y="250" width="80" height="45" fill="#2196F3" stroke="none" rx="6"/>
+  <text x="960" y="278" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Search</text>
+
+  <!-- Advanced Search Section -->
+  <text x="200" y="335" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333333">Advanced Search</text>
+  <line x1="200" y1="345" x2="1000" y2="345" stroke="#E0E0E0" stroke-width="1"/>
+
+  <!-- Advanced Search Form -->
+  <rect x="180" y="360" width="840" height="400" fill="#F9F9F9" stroke="#E0E0E0" stroke-width="1" rx="6"/>
+
+  <!-- Title Field -->
+  <text x="220" y="395" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Title</text>
+  <rect x="220" y="405" width="360" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="235" y="428" font-family="Arial, sans-serif" font-size="13" fill="#999999">Search by title</text>
+
+  <!-- Author Field -->
+  <text x="620" y="395" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Author</text>
+  <rect x="620" y="405" width="360" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="635" y="428" font-family="Arial, sans-serif" font-size="13" fill="#999999">Search by author</text>
+
+  <!-- ISBN Field -->
+  <text x="220" y="465" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">ISBN</text>
+  <rect x="220" y="475" width="360" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="235" y="498" font-family="Arial, sans-serif" font-size="13" fill="#999999">978-0-00-000000-0</text>
+
+  <!-- Publisher Field -->
+  <text x="620" y="465" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Publisher</text>
+  <rect x="620" y="475" width="360" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="635" y="498" font-family="Arial, sans-serif" font-size="13" fill="#999999">Search by publisher</text>
+
+  <!-- Genre Dropdown -->
+  <text x="220" y="535" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Genre</text>
+  <rect x="220" y="545" width="240" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="235" y="568" font-family="Arial, sans-serif" font-size="13" fill="#999999">Select genre</text>
+  <text x="445" y="568" font-family="Arial, sans-serif" font-size="13" fill="#999999">▼</text>
+
+  <!-- Language Dropdown -->
+  <text x="480" y="535" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Language</text>
+  <rect x="480" y="545" width="240" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="495" y="568" font-family="Arial, sans-serif" font-size="13" fill="#999999">Select language</text>
+  <text x="705" y="568" font-family="Arial, sans-serif" font-size="13" fill="#999999">▼</text>
+
+  <!-- Availability Dropdown -->
+  <text x="740" y="535" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Availability</text>
+  <rect x="740" y="545" width="240" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="755" y="568" font-family="Arial, sans-serif" font-size="13" fill="#999999">All books</text>
+  <text x="965" y="568" font-family="Arial, sans-serif" font-size="13" fill="#999999">▼</text>
+
+  <!-- Year Range -->
+  <text x="220" y="605" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Publication Year Range</text>
+  <rect x="220" y="615" width="180" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="235" y="638" font-family="Arial, sans-serif" font-size="13" fill="#999999">From (YYYY)</text>
+
+  <text x="420" y="638" font-family="Arial, sans-serif" font-size="13" fill="#666666">to</text>
+
+  <rect x="460" y="615" width="180" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="475" y="638" font-family="Arial, sans-serif" font-size="13" fill="#999999">To (YYYY)</text>
+
+  <!-- Price Range -->
+  <text x="660" y="605" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Price Range</text>
+  <rect x="660" y="615" width="150" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="675" y="638" font-family="Arial, sans-serif" font-size="13" fill="#999999">Min ($)</text>
+
+  <text x="825" y="638" font-family="Arial, sans-serif" font-size="13" fill="#666666">to</text>
+
+  <rect x="860" y="615" width="120" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="875" y="638" font-family="Arial, sans-serif" font-size="13" fill="#999999">Max ($)</text>
+
+  <!-- Sort By -->
+  <text x="220" y="680" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555">Sort Results By</text>
+  <rect x="220" y="690" width="240" height="35" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="235" y="713" font-family="Arial, sans-serif" font-size="13" fill="#999999">Relevance</text>
+  <text x="445" y="713" font-family="Arial, sans-serif" font-size="13" fill="#999999">▼</text>
+
+  <!-- Checkboxes -->
+  <rect x="480" y="690" width="15" height="15" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="2"/>
+  <text x="505" y="702" font-family="Arial, sans-serif" font-size="13" fill="#666666">In Stock Only</text>
+
+  <rect x="620" y="690" width="15" height="15" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="2"/>
+  <text x="645" y="702" font-family="Arial, sans-serif" font-size="13" fill="#666666">On Sale</text>
+
+  <rect x="740" y="690" width="15" height="15" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" rx="2"/>
+  <text x="765" y="702" font-family="Arial, sans-serif" font-size="13" fill="#666666">New Releases</text>
+
+  <!-- Action Buttons -->
+  <rect x="220" y="720" width="140" height="35" fill="#EEEEEE" stroke="#CCCCCC" stroke-width="1" rx="4"/>
+  <text x="290" y="743" font-family="Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle">Clear Filters</text>
+
+  <rect x="840" y="720" width="140" height="35" fill="#4CAF50" stroke="none" rx="4"/>
+  <text x="910" y="743" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Search</text>
+
+  <!-- Search Tips -->
+  <rect x="200" y="780" width="800" height="30" fill="#E3F2FD" stroke="#2196F3" stroke-width="1" rx="4"/>
+  <text x="220" y="801" font-family="Arial, sans-serif" font-size="12" fill="#1976D2">💡 Tip: Use quotation marks for exact phrase matches, or leave fields empty to search all books.</text>
+
+  <!-- Footer -->
+  <rect x="0" y="860" width="1200" height="40" fill="#333333" stroke="none"/>
+  <text x="40" y="885" font-family="Arial, sans-serif" font-size="12" fill="#FFFFFF">© 2024 Books Online. All rights reserved.</text>
+</svg>

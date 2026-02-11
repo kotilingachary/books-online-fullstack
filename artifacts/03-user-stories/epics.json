@@ -1,0 +1,362 @@
+{
+  "project": "Books Online - Book Management System",
+  "version": "1.0",
+  "createdDate": "2024-02-11",
+  "totalEpics": 12,
+  "totalStoryPoints": 177,
+  "epics": [
+    {
+      "epicId": "EP-001",
+      "epicName": "Book List Management",
+      "description": "Comprehensive book listing functionality with viewing, sorting, filtering, searching, and navigation capabilities in table format",
+      "priority": "Must Have",
+      "category": "Core Features",
+      "stories": ["US-001", "US-002", "US-003", "US-004", "US-005", "US-006"],
+      "totalStoryPoints": 21,
+      "estimatedDuration": "2 weeks (1 sprint)",
+      "status": "To Do",
+      "dependencies": [],
+      "deliverables": [
+        "Paginated book table with 6 columns",
+        "Column sorting functionality",
+        "Genre, author, and year filters",
+        "Quick search from header",
+        "Row click navigation to details"
+      ],
+      "acceptanceCriteria": [
+        "Users can view all books in paginated table format",
+        "Users can sort by title, author, genre, or year",
+        "Users can filter by genre, author, and year simultaneously",
+        "Users can search by title, author, or ISBN from header",
+        "Clicking book row navigates to details with preserved state"
+      ]
+    },
+    {
+      "epicId": "EP-002",
+      "epicName": "Add New Book",
+      "description": "Complete book creation workflow with required fields, optional metadata, cover image upload, and validation",
+      "priority": "Must Have",
+      "category": "Core Features",
+      "stories": ["US-007", "US-008", "US-009", "US-010"],
+      "totalStoryPoints": 18,
+      "estimatedDuration": "1.5 weeks",
+      "status": "To Do",
+      "dependencies": [],
+      "deliverables": [
+        "Add Book form with required fields validation",
+        "Optional fields support",
+        "Cover image upload with drag-drop",
+        "Cancel and save functionality"
+      ],
+      "acceptanceCriteria": [
+        "Users can add books with all 7 required fields",
+        "Optional fields (publisher, pages, price, stock, description) work correctly",
+        "Cover images can be uploaded via click or drag-drop",
+        "Form validates ISBN uniqueness and format",
+        "Success/error messages displayed appropriately"
+      ]
+    },
+    {
+      "epicId": "EP-003",
+      "epicName": "Advanced Search",
+      "description": "Powerful search functionality with quick search, text field searches, dropdowns, range filters, sorting, boolean filters, and clear functionality",
+      "priority": "Should Have",
+      "category": "Search Features",
+      "stories": ["US-011", "US-012", "US-013", "US-014", "US-015", "US-016", "US-047"],
+      "totalStoryPoints": 21,
+      "estimatedDuration": "2 weeks (1 sprint)",
+      "status": "To Do",
+      "dependencies": ["EP-001"],
+      "deliverables": [
+        "Quick search with single input",
+        "Advanced search with text fields (title, author, ISBN, publisher)",
+        "Dropdown filters (genre, language, availability)",
+        "Range filters (year, price)",
+        "Sort by 8 different criteria",
+        "Boolean filters (in stock, on sale, new releases)",
+        "Clear all filters button"
+      ],
+      "acceptanceCriteria": [
+        "Quick search matches title, author, ISBN across collection",
+        "Advanced search supports multiple text fields with AND logic",
+        "Dropdown filters provide exact match filtering",
+        "Range filters support year and price ranges",
+        "Results can be sorted by relevance, title, author, year, price, rating",
+        "Boolean filters work individually and in combination",
+        "Clear filters button resets all search criteria"
+      ]
+    },
+    {
+      "epicId": "EP-004",
+      "epicName": "Edit/Update Book",
+      "description": "Book editing workflow with data loading, ISBN immutability, field updates, cover image replacement, and change detection",
+      "priority": "Must Have",
+      "category": "Core Features",
+      "stories": ["US-017", "US-018", "US-019", "US-020", "US-021"],
+      "totalStoryPoints": 17,
+      "estimatedDuration": "1.5 weeks",
+      "status": "To Do",
+      "dependencies": ["EP-002"],
+      "deliverables": [
+        "Edit form with pre-populated data",
+        "ISBN field locked (read-only)",
+        "All other fields editable",
+        "Cover image replacement",
+        "Change detection (no changes warning)",
+        "Cancel functionality"
+      ],
+      "acceptanceCriteria": [
+        "Edit form loads with current book data",
+        "ISBN field is read-only with visual indicator",
+        "Users can update any field except ISBN",
+        "Cover image can be replaced",
+        "System detects when no changes made",
+        "Cancel returns to details without saving"
+      ]
+    },
+    {
+      "epicId": "EP-005",
+      "epicName": "View Book Details",
+      "description": "Comprehensive book details display with cover, rating, price, metadata grid, description, view count tracking, and action buttons",
+      "priority": "Must Have",
+      "category": "Core Features",
+      "stories": ["US-022", "US-023", "US-024", "US-025", "US-026", "US-027", "US-028"],
+      "totalStoryPoints": 22,
+      "estimatedDuration": "2 weeks (1 sprint)",
+      "status": "To Do",
+      "dependencies": [],
+      "deliverables": [
+        "Two-column layout (cover + details)",
+        "Rating display with stars and review count",
+        "Price box with discount support",
+        "Metadata grid (ISBN, publisher, year, language, pages, genre)",
+        "Description section",
+        "Metadata bar (book ID, dates, view count)",
+        "Action buttons (Edit, Duplicate, Export, Delete)"
+      ],
+      "acceptanceCriteria": [
+        "Details page displays all book information",
+        "Rating shown as stars with numeric value",
+        "Price shows current, original, and discount if applicable",
+        "All metadata fields displayed in organized grid",
+        "Description supports long text",
+        "View count increments on page load",
+        "Four action buttons navigate to respective functions"
+      ]
+    },
+    {
+      "epicId": "EP-006",
+      "epicName": "Delete Book",
+      "description": "Safe book deletion workflow with confirmation modal, book details preview, cancel option, and permanent deletion",
+      "priority": "Must Have",
+      "category": "Core Features",
+      "stories": ["US-029", "US-030", "US-031"],
+      "totalStoryPoints": 7,
+      "estimatedDuration": "0.5 week",
+      "status": "To Do",
+      "dependencies": ["EP-005"],
+      "deliverables": [
+        "Delete confirmation modal",
+        "Book details shown in modal (title, ISBN)",
+        "Cancel and confirm buttons",
+        "Permanent deletion via API",
+        "Success notification"
+      ],
+      "acceptanceCriteria": [
+        "Delete button shows modal with book details",
+        "Modal can be closed via cancel, ESC, or outside click",
+        "Confirm button sends DELETE request",
+        "Book removed from database permanently",
+        "User redirected to list after successful deletion"
+      ]
+    },
+    {
+      "epicId": "EP-007",
+      "epicName": "Duplicate and Export",
+      "description": "Productivity features for duplicating books and exporting book data in multiple formats (JSON, CSV, PDF)",
+      "priority": "Could Have",
+      "category": "Productivity Features",
+      "stories": ["US-032", "US-033", "US-034"],
+      "totalStoryPoints": 13,
+      "estimatedDuration": "1 week",
+      "status": "To Do",
+      "dependencies": ["EP-004"],
+      "deliverables": [
+        "Duplicate book functionality",
+        "Export as JSON",
+        "Export as CSV",
+        "Export as PDF with formatting"
+      ],
+      "acceptanceCriteria": [
+        "Duplicate creates copy with modified title and cleared ISBN",
+        "User navigated to edit form with duplicated data",
+        "Export as JSON downloads complete book object",
+        "Export as CSV creates spreadsheet-compatible file",
+        "Export as PDF creates formatted document with cover"
+      ]
+    },
+    {
+      "epicId": "EP-008",
+      "epicName": "Responsive Design",
+      "description": "Mobile-first responsive design with optimized layouts for mobile phones and tablet devices",
+      "priority": "Should Have",
+      "category": "User Experience",
+      "stories": ["US-035", "US-036"],
+      "totalStoryPoints": 13,
+      "estimatedDuration": "1 week",
+      "status": "To Do",
+      "dependencies": ["EP-001", "EP-002", "EP-005"],
+      "deliverables": [
+        "Mobile layout (<768px) - single column, cards, hamburger menu",
+        "Tablet layout (768-1024px) - 2-column forms, adjusted table",
+        "Touch-friendly buttons (44x44px minimum)",
+        "Responsive images and typography"
+      ],
+      "acceptanceCriteria": [
+        "Mobile users see card layout instead of table",
+        "Forms stack to single column on mobile",
+        "Book details stack vertically on mobile",
+        "Tablet layout maintains 2-column forms",
+        "All touch targets meet 44x44px minimum",
+        "Tested on iPhone, Android, iPad devices"
+      ]
+    },
+    {
+      "epicId": "EP-009",
+      "epicName": "Loading States and Feedback",
+      "description": "User feedback system with loading skeletons, spinners, toast notifications, and empty states",
+      "priority": "Must Have",
+      "category": "User Experience",
+      "stories": ["US-037", "US-038", "US-039"],
+      "totalStoryPoints": 11,
+      "estimatedDuration": "1 week",
+      "status": "To Do",
+      "dependencies": [],
+      "deliverables": [
+        "Skeleton loaders for tables and forms",
+        "Button loading states with spinners",
+        "Success and error toast notifications",
+        "Empty states with helpful messages"
+      ],
+      "acceptanceCriteria": [
+        "Tables show skeleton loaders during data fetch",
+        "Forms show spinners during loading",
+        "Buttons disabled during submission with loading text",
+        "Success toasts appear for successful operations",
+        "Error toasts show specific error messages",
+        "Empty states provide actionable next steps"
+      ]
+    },
+    {
+      "epicId": "EP-010",
+      "epicName": "Accessibility (WCAG 2.1 Level AA)",
+      "description": "Comprehensive accessibility features including keyboard navigation, screen reader support, and color contrast compliance",
+      "priority": "Should Have",
+      "category": "Accessibility",
+      "stories": ["US-040", "US-041", "US-042"],
+      "totalStoryPoints": 13,
+      "estimatedDuration": "1 week",
+      "status": "To Do",
+      "dependencies": ["EP-001", "EP-002", "EP-006", "EP-009"],
+      "deliverables": [
+        "Full keyboard navigation support",
+        "Screen reader compatibility (NVDA, JAWS, VoiceOver)",
+        "ARIA labels and live regions",
+        "Color contrast compliance (4.5:1 for normal text)",
+        "Focus indicators on all interactive elements"
+      ],
+      "acceptanceCriteria": [
+        "All interactive elements accessible via keyboard",
+        "Tab order follows logical visual order",
+        "ESC closes modals and dropdowns",
+        "ARIA labels present on all form inputs",
+        "Toast notifications announced to screen readers",
+        "Alt text on all images",
+        "Color contrast meets WCAG 2.1 AA (4.5:1)",
+        "Passes automated accessibility testing (axe, Lighthouse)"
+      ]
+    },
+    {
+      "epicId": "EP-011",
+      "epicName": "Performance Optimization",
+      "description": "Frontend and backend performance optimizations for fast page loads and API responses",
+      "priority": "Must Have",
+      "category": "Performance",
+      "stories": ["US-043", "US-044"],
+      "totalStoryPoints": 16,
+      "estimatedDuration": "1.5 weeks",
+      "status": "To Do",
+      "dependencies": [],
+      "deliverables": [
+        "Page load time <2s (Time to Interactive)",
+        "API response time <500ms (P95)",
+        "Code splitting and lazy loading",
+        "Image optimization and lazy loading",
+        "Database indexes on key columns",
+        "Query optimization (no N+1)",
+        "Connection pooling configuration"
+      ],
+      "acceptanceCriteria": [
+        "Lighthouse performance score >90",
+        "First Contentful Paint <1.5s",
+        "Cumulative Layout Shift <0.1",
+        "Main bundle <200KB gzipped",
+        "API response time <500ms for 95% of requests",
+        "Database indexes on title, author, genre, year, ISBN",
+        "Search returns results <1s for 10,000 books",
+        "Debounced search reduces API calls"
+      ]
+    },
+    {
+      "epicId": "EP-012",
+      "epicName": "Additional List Actions",
+      "description": "Quick action buttons in the book list for edit and delete operations directly from the table",
+      "priority": "Must Have",
+      "category": "Core Features",
+      "stories": ["US-045", "US-046"],
+      "totalStoryPoints": 5,
+      "estimatedDuration": "0.5 week",
+      "status": "To Do",
+      "dependencies": ["EP-001", "EP-004", "EP-006"],
+      "deliverables": [
+        "Edit button in Actions column",
+        "Delete button in Actions column",
+        "Navigation from list to edit form",
+        "Navigation from list to delete modal"
+      ],
+      "acceptanceCriteria": [
+        "Edit button navigates to edit form with pre-populated data",
+        "Delete button opens delete modal with confirmation",
+        "Both buttons accessible via keyboard",
+        "After edit/delete, user returned to list"
+      ]
+    }
+  ],
+  "epicsByPriority": {
+    "mustHave": ["EP-001", "EP-002", "EP-004", "EP-005", "EP-006", "EP-009", "EP-011", "EP-012"],
+    "shouldHave": ["EP-003", "EP-008", "EP-010"],
+    "couldHave": ["EP-007"]
+  },
+  "epicsByCategory": {
+    "coreFeatures": ["EP-001", "EP-002", "EP-004", "EP-005", "EP-006", "EP-012"],
+    "searchFeatures": ["EP-003"],
+    "productivityFeatures": ["EP-007"],
+    "userExperience": ["EP-008", "EP-009"],
+    "accessibility": ["EP-010"],
+    "performance": ["EP-011"]
+  },
+  "dependencyChain": {
+    "foundational": ["EP-001", "EP-002", "EP-005", "EP-009", "EP-011"],
+    "dependent": ["EP-003", "EP-004", "EP-006", "EP-007", "EP-008", "EP-010", "EP-012"]
+  },
+  "summary": {
+    "totalEpics": 12,
+    "totalStories": 47,
+    "totalStoryPoints": 177,
+    "averagePointsPerEpic": 14.75,
+    "estimatedTotalDuration": "14.5 weeks",
+    "mustHaveEpics": 8,
+    "shouldHaveEpics": 3,
+    "couldHaveEpics": 1
+  }
+}

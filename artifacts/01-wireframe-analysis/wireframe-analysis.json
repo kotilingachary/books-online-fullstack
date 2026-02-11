@@ -1,0 +1,864 @@
+{
+  "projectName": "Books Online - Book Management System",
+  "analysisDate": "2024-02-10T23:56:00Z",
+  "totalScreens": 5,
+  "screens": [
+    {
+      "screenId": "books-list",
+      "screenName": "Books List View",
+      "screenType": "list",
+      "wireframeFile": "01_books_list_view.svg",
+      "components": [
+        {
+          "componentId": "main-header",
+          "componentType": "header",
+          "elements": ["logo-text", "search-bar", "add-book-button"]
+        },
+        {
+          "componentId": "header-search",
+          "componentType": "search-input",
+          "label": "",
+          "placeholder": "Search books...",
+          "position": {"section": "header", "order": 1}
+        },
+        {
+          "componentId": "add-book-btn",
+          "componentType": "button",
+          "label": "+ Add Book",
+          "variant": "primary",
+          "color": "#4CAF50",
+          "position": {"section": "header", "order": 2}
+        },
+        {
+          "componentId": "filters-section",
+          "componentType": "filter-bar",
+          "elements": ["genre-dropdown", "author-dropdown", "year-dropdown"]
+        },
+        {
+          "componentId": "genre-filter",
+          "componentType": "dropdown",
+          "label": "Genre",
+          "isRequired": false,
+          "position": {"section": "filters", "order": 1}
+        },
+        {
+          "componentId": "author-filter",
+          "componentType": "dropdown",
+          "label": "Author",
+          "isRequired": false,
+          "position": {"section": "filters", "order": 2}
+        },
+        {
+          "componentId": "year-filter",
+          "componentType": "dropdown",
+          "label": "Year",
+          "isRequired": false,
+          "position": {"section": "filters", "order": 3}
+        },
+        {
+          "componentId": "books-table",
+          "componentType": "table",
+          "columns": ["Cover", "Title", "Author", "Genre", "Year", "Actions"],
+          "features": ["sortable", "actionButtons"],
+          "pagination": true
+        },
+        {
+          "componentId": "pagination",
+          "componentType": "pagination",
+          "label": "Showing 1-4 of 24 books",
+          "features": ["page-numbers", "prev-next-buttons"],
+          "position": {"section": "main", "order": 99}
+        },
+        {
+          "componentId": "footer",
+          "componentType": "footer",
+          "content": "© 2024 Books Online. All rights reserved."
+        }
+      ],
+      "dataElements": [
+        {"fieldName": "title", "fieldType": "text", "isCollection": true, "source": "books-table"},
+        {"fieldName": "author", "fieldType": "text", "isCollection": true, "source": "books-table"},
+        {"fieldName": "genre", "fieldType": "text", "isCollection": true, "source": "books-table"},
+        {"fieldName": "year", "fieldType": "integer", "isCollection": true, "source": "books-table"},
+        {"fieldName": "isbn", "fieldType": "text", "isCollection": true, "source": "books-table"},
+        {"fieldName": "coverImage", "fieldType": "image", "isCollection": true, "source": "books-table"}
+      ],
+      "actions": [
+        {
+          "actionId": "navigate-add-book",
+          "actionType": "navigation",
+          "trigger": "+ Add Book button click",
+          "target": "add-book-form"
+        },
+        {
+          "actionId": "edit-book",
+          "actionType": "navigation",
+          "trigger": "Edit button click",
+          "target": "update-book-form"
+        },
+        {
+          "actionId": "delete-book",
+          "actionType": "modal",
+          "trigger": "Delete button click",
+          "target": "book-details-delete"
+        },
+        {
+          "actionId": "search-books",
+          "actionType": "filter",
+          "trigger": "Search input change",
+          "target": "books-list"
+        }
+      ]
+    },
+    {
+      "screenId": "add-book-form",
+      "screenName": "Add New Book",
+      "screenType": "form",
+      "wireframeFile": "02_add_book_form.svg",
+      "components": [
+        {
+          "componentId": "back-button",
+          "componentType": "button",
+          "label": "← Back",
+          "variant": "secondary",
+          "position": {"section": "header", "order": 1}
+        },
+        {
+          "componentId": "cover-upload",
+          "componentType": "file-upload",
+          "label": "Book Cover",
+          "acceptedFormats": ["image/*"],
+          "isRequired": false,
+          "features": ["drag-drop", "click-to-upload"]
+        },
+        {
+          "componentId": "title-input",
+          "componentType": "input",
+          "label": "Title",
+          "placeholder": "Enter book title",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "required"
+        },
+        {
+          "componentId": "isbn-input",
+          "componentType": "input",
+          "label": "ISBN",
+          "placeholder": "978-0-00-000000-0",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "isbn-format"
+        },
+        {
+          "componentId": "author-input",
+          "componentType": "input",
+          "label": "Author",
+          "placeholder": "Enter author name",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "required"
+        },
+        {
+          "componentId": "publisher-input",
+          "componentType": "input",
+          "label": "Publisher",
+          "placeholder": "Enter publisher name",
+          "dataType": "text",
+          "isRequired": false
+        },
+        {
+          "componentId": "genre-dropdown",
+          "componentType": "dropdown",
+          "label": "Genre",
+          "placeholder": "Select genre",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "required"
+        },
+        {
+          "componentId": "year-input",
+          "componentType": "input",
+          "label": "Publication Year",
+          "placeholder": "YYYY",
+          "dataType": "integer",
+          "isRequired": true,
+          "validation": "year-format"
+        },
+        {
+          "componentId": "pages-input",
+          "componentType": "input",
+          "label": "Pages",
+          "placeholder": "Number of pages",
+          "dataType": "integer",
+          "isRequired": false
+        },
+        {
+          "componentId": "language-dropdown",
+          "componentType": "dropdown",
+          "label": "Language",
+          "placeholder": "Select language",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "required"
+        },
+        {
+          "componentId": "price-input",
+          "componentType": "input",
+          "label": "Price",
+          "placeholder": "$0.00",
+          "dataType": "decimal",
+          "isRequired": false
+        },
+        {
+          "componentId": "stock-input",
+          "componentType": "input",
+          "label": "Stock Quantity",
+          "placeholder": "Available copies",
+          "dataType": "integer",
+          "isRequired": false
+        },
+        {
+          "componentId": "description-textarea",
+          "componentType": "textarea",
+          "label": "Description",
+          "placeholder": "Enter book description...",
+          "dataType": "text",
+          "isRequired": false
+        },
+        {
+          "componentId": "cancel-button",
+          "componentType": "button",
+          "label": "Cancel",
+          "variant": "secondary",
+          "position": {"section": "actions", "order": 1}
+        },
+        {
+          "componentId": "submit-button",
+          "componentType": "button",
+          "label": "Add Book",
+          "variant": "primary",
+          "color": "#4CAF50",
+          "position": {"section": "actions", "order": 2}
+        }
+      ],
+      "dataElements": [
+        {"fieldName": "title", "fieldType": "text", "isCollection": false, "source": "title-input"},
+        {"fieldName": "isbn", "fieldType": "text", "isCollection": false, "source": "isbn-input"},
+        {"fieldName": "author", "fieldType": "text", "isCollection": false, "source": "author-input"},
+        {"fieldName": "publisher", "fieldType": "text", "isCollection": false, "source": "publisher-input"},
+        {"fieldName": "genre", "fieldType": "text", "isCollection": false, "source": "genre-dropdown"},
+        {"fieldName": "publicationYear", "fieldType": "integer", "isCollection": false, "source": "year-input"},
+        {"fieldName": "pages", "fieldType": "integer", "isCollection": false, "source": "pages-input"},
+        {"fieldName": "language", "fieldType": "text", "isCollection": false, "source": "language-dropdown"},
+        {"fieldName": "price", "fieldType": "decimal", "isCollection": false, "source": "price-input"},
+        {"fieldName": "stockQuantity", "fieldType": "integer", "isCollection": false, "source": "stock-input"},
+        {"fieldName": "description", "fieldType": "text", "isCollection": false, "source": "description-textarea"},
+        {"fieldName": "coverImage", "fieldType": "file", "isCollection": false, "source": "cover-upload"}
+      ],
+      "actions": [
+        {
+          "actionId": "cancel-add",
+          "actionType": "navigation",
+          "trigger": "Cancel button click",
+          "target": "books-list"
+        },
+        {
+          "actionId": "submit-new-book",
+          "actionType": "submit",
+          "trigger": "Add Book button click",
+          "target": "/api/v1/books",
+          "method": "POST"
+        },
+        {
+          "actionId": "navigate-back",
+          "actionType": "navigation",
+          "trigger": "← Back button click",
+          "target": "books-list"
+        }
+      ]
+    },
+    {
+      "screenId": "search-books",
+      "screenName": "Search Books",
+      "screenType": "search",
+      "wireframeFile": "03_search_books.svg",
+      "components": [
+        {
+          "componentId": "quick-search",
+          "componentType": "search-input",
+          "label": "Quick Search",
+          "placeholder": "Search by title, author, ISBN, or keyword...",
+          "size": "large",
+          "position": {"section": "main", "order": 1}
+        },
+        {
+          "componentId": "advanced-search-form",
+          "componentType": "form",
+          "label": "Advanced Search",
+          "position": {"section": "main", "order": 2}
+        },
+        {
+          "componentId": "title-search",
+          "componentType": "input",
+          "label": "Title",
+          "placeholder": "Search by title",
+          "dataType": "text",
+          "isRequired": false
+        },
+        {
+          "componentId": "author-search",
+          "componentType": "input",
+          "label": "Author",
+          "placeholder": "Search by author",
+          "dataType": "text",
+          "isRequired": false
+        },
+        {
+          "componentId": "isbn-search",
+          "componentType": "input",
+          "label": "ISBN",
+          "placeholder": "978-0-00-000000-0",
+          "dataType": "text",
+          "isRequired": false
+        },
+        {
+          "componentId": "publisher-search",
+          "componentType": "input",
+          "label": "Publisher",
+          "placeholder": "Search by publisher",
+          "dataType": "text",
+          "isRequired": false
+        },
+        {
+          "componentId": "genre-search",
+          "componentType": "dropdown",
+          "label": "Genre",
+          "placeholder": "Select genre",
+          "isRequired": false
+        },
+        {
+          "componentId": "language-search",
+          "componentType": "dropdown",
+          "label": "Language",
+          "placeholder": "Select language",
+          "isRequired": false
+        },
+        {
+          "componentId": "availability-search",
+          "componentType": "dropdown",
+          "label": "Availability",
+          "placeholder": "All books",
+          "isRequired": false
+        },
+        {
+          "componentId": "year-from",
+          "componentType": "input",
+          "label": "From (YYYY)",
+          "placeholder": "From (YYYY)",
+          "dataType": "integer",
+          "isRequired": false
+        },
+        {
+          "componentId": "year-to",
+          "componentType": "input",
+          "label": "To (YYYY)",
+          "placeholder": "To (YYYY)",
+          "dataType": "integer",
+          "isRequired": false
+        },
+        {
+          "componentId": "price-min",
+          "componentType": "input",
+          "label": "Min ($)",
+          "placeholder": "Min ($)",
+          "dataType": "decimal",
+          "isRequired": false
+        },
+        {
+          "componentId": "price-max",
+          "componentType": "input",
+          "label": "Max ($)",
+          "placeholder": "Max ($)",
+          "dataType": "decimal",
+          "isRequired": false
+        },
+        {
+          "componentId": "sort-by",
+          "componentType": "dropdown",
+          "label": "Sort Results By",
+          "placeholder": "Relevance",
+          "isRequired": false
+        },
+        {
+          "componentId": "in-stock-only",
+          "componentType": "checkbox",
+          "label": "In Stock Only",
+          "dataType": "boolean",
+          "isRequired": false
+        },
+        {
+          "componentId": "on-sale",
+          "componentType": "checkbox",
+          "label": "On Sale",
+          "dataType": "boolean",
+          "isRequired": false
+        },
+        {
+          "componentId": "new-releases",
+          "componentType": "checkbox",
+          "label": "New Releases",
+          "dataType": "boolean",
+          "isRequired": false
+        },
+        {
+          "componentId": "clear-filters-button",
+          "componentType": "button",
+          "label": "Clear Filters",
+          "variant": "secondary"
+        },
+        {
+          "componentId": "search-button",
+          "componentType": "button",
+          "label": "Search",
+          "variant": "primary",
+          "color": "#4CAF50"
+        },
+        {
+          "componentId": "search-tips",
+          "componentType": "info-banner",
+          "content": "Tip: Use quotation marks for exact phrase matches, or leave fields empty to search all books."
+        }
+      ],
+      "dataElements": [
+        {"fieldName": "quickSearch", "fieldType": "text", "isCollection": false, "source": "quick-search"},
+        {"fieldName": "advancedSearchCriteria", "fieldType": "object", "isCollection": false, "source": "advanced-search-form"}
+      ],
+      "actions": [
+        {
+          "actionId": "quick-search-submit",
+          "actionType": "search",
+          "trigger": "Search button click (quick)",
+          "target": "/api/v1/books/search"
+        },
+        {
+          "actionId": "advanced-search-submit",
+          "actionType": "search",
+          "trigger": "Search button click (advanced)",
+          "target": "/api/v1/books/search"
+        },
+        {
+          "actionId": "clear-filters",
+          "actionType": "reset",
+          "trigger": "Clear Filters button click",
+          "target": "search-books"
+        },
+        {
+          "actionId": "navigate-back",
+          "actionType": "navigation",
+          "trigger": "← Back button click",
+          "target": "books-list"
+        }
+      ]
+    },
+    {
+      "screenId": "update-book-form",
+      "screenName": "Edit Book",
+      "screenType": "form",
+      "wireframeFile": "04_update_book_form.svg",
+      "components": [
+        {
+          "componentId": "book-id-display",
+          "componentType": "info-banner",
+          "content": "Book ID: BK-2024-001234 | Last Updated: 2024-01-15",
+          "color": "#FFF9E6"
+        },
+        {
+          "componentId": "cover-image-display",
+          "componentType": "image-preview",
+          "label": "Book Cover",
+          "currentImage": "gatsby_cover.jpg",
+          "features": ["change-image-button"]
+        },
+        {
+          "componentId": "title-input-edit",
+          "componentType": "input",
+          "label": "Title",
+          "value": "The Great Gatsby",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "required"
+        },
+        {
+          "componentId": "isbn-input-edit",
+          "componentType": "input",
+          "label": "ISBN",
+          "value": "978-0-7432-7356-5",
+          "dataType": "text",
+          "isRequired": true,
+          "isReadOnly": true,
+          "validation": "isbn-format"
+        },
+        {
+          "componentId": "author-input-edit",
+          "componentType": "input",
+          "label": "Author",
+          "value": "F. Scott Fitzgerald",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "required"
+        },
+        {
+          "componentId": "publisher-input-edit",
+          "componentType": "input",
+          "label": "Publisher",
+          "value": "Scribner",
+          "dataType": "text",
+          "isRequired": false
+        },
+        {
+          "componentId": "genre-dropdown-edit",
+          "componentType": "dropdown",
+          "label": "Genre",
+          "value": "Fiction",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "required"
+        },
+        {
+          "componentId": "year-input-edit",
+          "componentType": "input",
+          "label": "Publication Year",
+          "value": "1925",
+          "dataType": "integer",
+          "isRequired": true,
+          "validation": "year-format"
+        },
+        {
+          "componentId": "pages-input-edit",
+          "componentType": "input",
+          "label": "Pages",
+          "value": "180",
+          "dataType": "integer",
+          "isRequired": false
+        },
+        {
+          "componentId": "language-dropdown-edit",
+          "componentType": "dropdown",
+          "label": "Language",
+          "value": "English",
+          "dataType": "text",
+          "isRequired": true,
+          "validation": "required"
+        },
+        {
+          "componentId": "price-input-edit",
+          "componentType": "input",
+          "label": "Price",
+          "value": "$15.99",
+          "dataType": "decimal",
+          "isRequired": false
+        },
+        {
+          "componentId": "stock-input-edit",
+          "componentType": "input",
+          "label": "Stock Quantity",
+          "value": "42",
+          "dataType": "integer",
+          "isRequired": false
+        },
+        {
+          "componentId": "description-textarea-edit",
+          "componentType": "textarea",
+          "label": "Description",
+          "value": "A classic American novel set in the Jazz Age...",
+          "dataType": "text",
+          "isRequired": false
+        },
+        {
+          "componentId": "cancel-button-edit",
+          "componentType": "button",
+          "label": "Cancel",
+          "variant": "secondary",
+          "position": {"section": "actions", "order": 1}
+        },
+        {
+          "componentId": "update-button",
+          "componentType": "button",
+          "label": "Update Book",
+          "variant": "primary",
+          "color": "#FF9800",
+          "position": {"section": "actions", "order": 2}
+        }
+      ],
+      "dataElements": [
+        {"fieldName": "bookId", "fieldType": "text", "isCollection": false, "source": "book-id-display"},
+        {"fieldName": "title", "fieldType": "text", "isCollection": false, "source": "title-input-edit"},
+        {"fieldName": "isbn", "fieldType": "text", "isCollection": false, "source": "isbn-input-edit"},
+        {"fieldName": "author", "fieldType": "text", "isCollection": false, "source": "author-input-edit"},
+        {"fieldName": "publisher", "fieldType": "text", "isCollection": false, "source": "publisher-input-edit"},
+        {"fieldName": "genre", "fieldType": "text", "isCollection": false, "source": "genre-dropdown-edit"},
+        {"fieldName": "publicationYear", "fieldType": "integer", "isCollection": false, "source": "year-input-edit"},
+        {"fieldName": "pages", "fieldType": "integer", "isCollection": false, "source": "pages-input-edit"},
+        {"fieldName": "language", "fieldType": "text", "isCollection": false, "source": "language-dropdown-edit"},
+        {"fieldName": "price", "fieldType": "decimal", "isCollection": false, "source": "price-input-edit"},
+        {"fieldName": "stockQuantity", "fieldType": "integer", "isCollection": false, "source": "stock-input-edit"},
+        {"fieldName": "description", "fieldType": "text", "isCollection": false, "source": "description-textarea-edit"},
+        {"fieldName": "coverImage", "fieldType": "file", "isCollection": false, "source": "cover-image-display"}
+      ],
+      "actions": [
+        {
+          "actionId": "cancel-edit",
+          "actionType": "navigation",
+          "trigger": "Cancel button click",
+          "target": "book-details"
+        },
+        {
+          "actionId": "submit-update",
+          "actionType": "submit",
+          "trigger": "Update Book button click",
+          "target": "/api/v1/books/{id}",
+          "method": "PUT"
+        },
+        {
+          "actionId": "navigate-back",
+          "actionType": "navigation",
+          "trigger": "← Back button click",
+          "target": "books-list"
+        }
+      ]
+    },
+    {
+      "screenId": "book-details",
+      "screenName": "Book Details with Delete Confirmation",
+      "screenType": "detail",
+      "wireframeFile": "05_book_details_delete.svg",
+      "components": [
+        {
+          "componentId": "book-cover-large",
+          "componentType": "image",
+          "label": "Book Cover",
+          "size": "large",
+          "features": ["availability-badge"]
+        },
+        {
+          "componentId": "availability-badge",
+          "componentType": "badge",
+          "label": "In Stock",
+          "color": "#4CAF50"
+        },
+        {
+          "componentId": "book-title-display",
+          "componentType": "heading",
+          "content": "The Great Gatsby",
+          "level": 1
+        },
+        {
+          "componentId": "author-display",
+          "componentType": "text",
+          "content": "by F. Scott Fitzgerald"
+        },
+        {
+          "componentId": "rating-display",
+          "componentType": "rating",
+          "value": 4.2,
+          "maxValue": 5.0,
+          "reviewCount": 1234,
+          "displayFormat": "stars"
+        },
+        {
+          "componentId": "price-display",
+          "componentType": "price-box",
+          "currentPrice": "$15.99",
+          "originalPrice": "$19.99",
+          "discount": "20% OFF",
+          "stockInfo": "42 copies available"
+        },
+        {
+          "componentId": "details-grid",
+          "componentType": "definition-list",
+          "fields": ["ISBN", "Publisher", "Publication Year", "Language", "Pages", "Genre"]
+        },
+        {
+          "componentId": "description-section",
+          "componentType": "text-block",
+          "label": "Description",
+          "content": "Full book description..."
+        },
+        {
+          "componentId": "metadata-bar",
+          "componentType": "info-bar",
+          "content": "Book ID: BK-2024-001234 | Added: 2023-12-10 | Last Updated: 2024-01-15 | Views: 3,456"
+        },
+        {
+          "componentId": "edit-book-button",
+          "componentType": "button",
+          "label": "Edit Book",
+          "variant": "primary",
+          "color": "#2196F3"
+        },
+        {
+          "componentId": "duplicate-button",
+          "componentType": "button",
+          "label": "Duplicate",
+          "variant": "secondary",
+          "color": "#FF9800"
+        },
+        {
+          "componentId": "export-button",
+          "componentType": "button",
+          "label": "Export Data",
+          "variant": "secondary",
+          "color": "#9E9E9E"
+        },
+        {
+          "componentId": "delete-button",
+          "componentType": "button",
+          "label": "Delete Book",
+          "variant": "danger",
+          "color": "#F44336"
+        },
+        {
+          "componentId": "delete-modal",
+          "componentType": "modal",
+          "title": "⚠ Confirm Delete",
+          "type": "confirmation",
+          "severity": "danger"
+        },
+        {
+          "componentId": "modal-cancel-button",
+          "componentType": "button",
+          "label": "Cancel",
+          "variant": "secondary",
+          "color": "#9E9E9E"
+        },
+        {
+          "componentId": "modal-confirm-button",
+          "componentType": "button",
+          "label": "Delete Permanently",
+          "variant": "danger",
+          "color": "#F44336"
+        }
+      ],
+      "dataElements": [
+        {"fieldName": "bookId", "fieldType": "text", "isCollection": false, "source": "metadata-bar"},
+        {"fieldName": "title", "fieldType": "text", "isCollection": false, "source": "book-title-display"},
+        {"fieldName": "author", "fieldType": "text", "isCollection": false, "source": "author-display"},
+        {"fieldName": "isbn", "fieldType": "text", "isCollection": false, "source": "details-grid"},
+        {"fieldName": "publisher", "fieldType": "text", "isCollection": false, "source": "details-grid"},
+        {"fieldName": "publicationYear", "fieldType": "integer", "isCollection": false, "source": "details-grid"},
+        {"fieldName": "language", "fieldType": "text", "isCollection": false, "source": "details-grid"},
+        {"fieldName": "pages", "fieldType": "integer", "isCollection": false, "source": "details-grid"},
+        {"fieldName": "genre", "fieldType": "text", "isCollection": false, "source": "details-grid"},
+        {"fieldName": "price", "fieldType": "decimal", "isCollection": false, "source": "price-display"},
+        {"fieldName": "stockQuantity", "fieldType": "integer", "isCollection": false, "source": "price-display"},
+        {"fieldName": "rating", "fieldType": "decimal", "isCollection": false, "source": "rating-display"},
+        {"fieldName": "reviewCount", "fieldType": "integer", "isCollection": false, "source": "rating-display"},
+        {"fieldName": "description", "fieldType": "text", "isCollection": false, "source": "description-section"},
+        {"fieldName": "coverImage", "fieldType": "image", "isCollection": false, "source": "book-cover-large"},
+        {"fieldName": "addedDate", "fieldType": "date", "isCollection": false, "source": "metadata-bar"},
+        {"fieldName": "lastUpdatedDate", "fieldType": "date", "isCollection": false, "source": "metadata-bar"},
+        {"fieldName": "viewCount", "fieldType": "integer", "isCollection": false, "source": "metadata-bar"}
+      ],
+      "actions": [
+        {
+          "actionId": "edit-book-action",
+          "actionType": "navigation",
+          "trigger": "Edit Book button click",
+          "target": "update-book-form"
+        },
+        {
+          "actionId": "duplicate-book-action",
+          "actionType": "submit",
+          "trigger": "Duplicate button click",
+          "target": "/api/v1/books/{id}/duplicate",
+          "method": "POST"
+        },
+        {
+          "actionId": "export-data-action",
+          "actionType": "download",
+          "trigger": "Export Data button click",
+          "target": "/api/v1/books/{id}/export"
+        },
+        {
+          "actionId": "show-delete-modal",
+          "actionType": "modal",
+          "trigger": "Delete Book button click",
+          "target": "delete-modal"
+        },
+        {
+          "actionId": "cancel-delete",
+          "actionType": "close-modal",
+          "trigger": "Cancel button click",
+          "target": "delete-modal"
+        },
+        {
+          "actionId": "confirm-delete",
+          "actionType": "submit",
+          "trigger": "Delete Permanently button click",
+          "target": "/api/v1/books/{id}",
+          "method": "DELETE"
+        },
+        {
+          "actionId": "navigate-back",
+          "actionType": "navigation",
+          "trigger": "← Back button click",
+          "target": "books-list"
+        }
+      ]
+    }
+  ],
+  "navigation": [
+    {"from": "books-list", "to": "add-book-form", "trigger": "+ Add Book button", "transitionType": "push"},
+    {"from": "books-list", "to": "update-book-form", "trigger": "Edit button", "transitionType": "push"},
+    {"from": "books-list", "to": "book-details", "trigger": "Book row click or View", "transitionType": "push"},
+    {"from": "books-list", "to": "search-books", "trigger": "Search link or Advanced search", "transitionType": "push"},
+    {"from": "add-book-form", "to": "books-list", "trigger": "Cancel or Back button", "transitionType": "pop"},
+    {"from": "add-book-form", "to": "books-list", "trigger": "Add Book success", "transitionType": "replace"},
+    {"from": "update-book-form", "to": "book-details", "trigger": "Update Book success", "transitionType": "replace"},
+    {"from": "update-book-form", "to": "books-list", "trigger": "Cancel or Back button", "transitionType": "pop"},
+    {"from": "book-details", "to": "update-book-form", "trigger": "Edit Book button", "transitionType": "push"},
+    {"from": "book-details", "to": "books-list", "trigger": "Delete success", "transitionType": "replace"},
+    {"from": "book-details", "to": "books-list", "trigger": "Back button", "transitionType": "pop"},
+    {"from": "search-books", "to": "books-list", "trigger": "Search results or Back button", "transitionType": "replace"}
+  ],
+  "globalComponents": [
+    {
+      "componentType": "header",
+      "appearsOn": ["all"],
+      "contains": ["logo-text", "search-bar", "navigation-buttons"]
+    },
+    {
+      "componentType": "footer",
+      "appearsOn": ["all"],
+      "contains": ["copyright-text"]
+    }
+  ],
+  "inferredEntities": [
+    {
+      "entityName": "Book",
+      "source": "All screens - primary entity",
+      "fields": [
+        {"fieldName": "id", "fieldType": "long", "isRequired": true, "isPrimaryKey": true},
+        {"fieldName": "title", "fieldType": "text", "isRequired": true},
+        {"fieldName": "isbn", "fieldType": "text", "isRequired": true, "isUnique": true},
+        {"fieldName": "author", "fieldType": "text", "isRequired": true},
+        {"fieldName": "publisher", "fieldType": "text", "isRequired": false},
+        {"fieldName": "genre", "fieldType": "text", "isRequired": true},
+        {"fieldName": "publicationYear", "fieldType": "integer", "isRequired": true},
+        {"fieldName": "pages", "fieldType": "integer", "isRequired": false},
+        {"fieldName": "language", "fieldType": "text", "isRequired": true},
+        {"fieldName": "price", "fieldType": "decimal", "isRequired": false},
+        {"fieldName": "stockQuantity", "fieldType": "integer", "isRequired": false, "defaultValue": 0},
+        {"fieldName": "description", "fieldType": "text", "isRequired": false},
+        {"fieldName": "coverImageUrl", "fieldType": "text", "isRequired": false},
+        {"fieldName": "rating", "fieldType": "decimal", "isRequired": false},
+        {"fieldName": "reviewCount", "fieldType": "integer", "isRequired": false, "defaultValue": 0},
+        {"fieldName": "viewCount", "fieldType": "integer", "isRequired": false, "defaultValue": 0},
+        {"fieldName": "isAvailable", "fieldType": "boolean", "isRequired": true, "defaultValue": true},
+        {"fieldName": "createdAt", "fieldType": "timestamp", "isRequired": true},
+        {"fieldName": "updatedAt", "fieldType": "timestamp", "isRequired": true}
+      ],
+      "relationships": []
+    }
+  ]
+}

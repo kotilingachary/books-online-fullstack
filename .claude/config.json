@@ -1,0 +1,106 @@
+{
+  "projectName": "Figma-to-Production",
+  "version": "1.0.0",
+  "description": "Multi-agent system for transforming Figma wireframes to production applications",
+  "techStack": {
+    "frontend": {
+      "framework": "React",
+      "version": "18.x",
+      "buildTool": "Vite",
+      "router": "React Router v6",
+      "stateManagement": "Context API",
+      "formLibrary": "React Hook Form",
+      "validation": "Zod",
+      "styling": "Tailwind CSS",
+      "httpClient": "axios",
+      "testing": "Vitest + React Testing Library"
+    },
+    "backend": {
+      "language": "Java",
+      "version": "17",
+      "framework": "Spring Boot",
+      "springBootVersion": "3.2.x",
+      "database": "H2",
+      "orm": "Spring Data JPA",
+      "buildTool": "Maven",
+      "apiDocs": "Springdoc OpenAPI",
+      "testing": "JUnit 5 + Mockito"
+    },
+    "deployment": {
+      "containerization": "Docker",
+      "orchestration": "docker-compose",
+      "cicd": "GitHub Actions",
+      "kubernetes": false
+    }
+  },
+  "agents": {
+    "wireframeAnalyzer": {
+      "enabled": true,
+      "input": "wireframes/",
+      "output": "artifacts/01-wireframe-analysis/"
+    },
+    "prdGenerator": {
+      "enabled": true,
+      "input": "artifacts/01-wireframe-analysis/",
+      "output": "artifacts/02-prd/"
+    },
+    "userStoriesGenerator": {
+      "enabled": true,
+      "input": "artifacts/02-prd/",
+      "output": "artifacts/03-user-stories/"
+    },
+    "architectureDesigner": {
+      "enabled": true,
+      "input": ["artifacts/02-prd/", "artifacts/03-user-stories/"],
+      "output": "artifacts/04-architecture/"
+    },
+    "apiSpecGenerator": {
+      "enabled": true,
+      "input": ["artifacts/04-architecture/", "artifacts/03-user-stories/"],
+      "output": "artifacts/05-api-spec/"
+    },
+    "databaseDesigner": {
+      "enabled": true,
+      "input": ["artifacts/04-architecture/", "artifacts/05-api-spec/"],
+      "output": "artifacts/06-database-design/"
+    },
+    "backendGenerator": {
+      "enabled": true,
+      "input": ["artifacts/05-api-spec/", "artifacts/06-database-design/", "artifacts/04-architecture/"],
+      "output": "backend/"
+    },
+    "frontendGenerator": {
+      "enabled": true,
+      "input": ["artifacts/05-api-spec/", "artifacts/01-wireframe-analysis/", "artifacts/04-architecture/"],
+      "output": "frontend/"
+    },
+    "testGenerator": {
+      "enabled": true,
+      "input": ["backend/", "frontend/", "artifacts/03-user-stories/"],
+      "output": "tests/"
+    },
+    "deploymentAgent": {
+      "enabled": true,
+      "input": ["backend/", "frontend/", "artifacts/06-database-design/"],
+      "output": "deployment/"
+    }
+  },
+  "codeStyle": {
+    "java": {
+      "indentation": "4 spaces",
+      "naming": "camelCase for variables, PascalCase for classes",
+      "lineLength": 120
+    },
+    "javascript": {
+      "indentation": "2 spaces",
+      "quotes": "single",
+      "semicolons": false,
+      "naming": "camelCase for variables, PascalCase for components"
+    }
+  },
+  "validation": {
+    "enableTypeChecking": true,
+    "enableLinting": true,
+    "enableFormatting": true
+  }
+}

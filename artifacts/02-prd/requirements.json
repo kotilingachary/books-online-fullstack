@@ -1,0 +1,858 @@
+{
+  "functional": [
+    {
+      "requirementId": "FR-001",
+      "category": "Book List Management",
+      "requirement": "System shall display all books in a paginated table with columns for Cover, Title, Author, Genre, Year, and Actions",
+      "priority": "Must Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-002",
+      "category": "Book List Management",
+      "requirement": "System shall paginate book listings with configurable page size and navigation controls (Previous, Next, Page numbers)",
+      "priority": "Must Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-003",
+      "category": "Book List Management",
+      "requirement": "System shall provide dropdown filters for Genre, Author, and Year in the Books List View",
+      "priority": "Should Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-004",
+      "category": "Book List Management",
+      "requirement": "System shall provide real-time search functionality in the header search bar matching against title, author, and ISBN",
+      "priority": "Should Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-005",
+      "category": "Book List Management",
+      "requirement": "System shall provide '+ Add Book' button in header to navigate to Add Book Form",
+      "priority": "Must Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-006",
+      "category": "Book List Management",
+      "requirement": "System shall provide Edit button on each table row to navigate to Edit Book Form",
+      "priority": "Must Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-007",
+      "category": "Book List Management",
+      "requirement": "System shall provide Delete button on each table row with confirmation modal",
+      "priority": "Must Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-008",
+      "category": "Book List Management",
+      "requirement": "System shall allow clicking on book row to navigate to Book Details screen",
+      "priority": "Must Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-009",
+      "category": "Book List Management",
+      "requirement": "System shall display consistent header and footer on all screens",
+      "priority": "Must Have",
+      "source": "All wireframes",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-010",
+      "category": "Book List Management",
+      "requirement": "System shall display helpful messages when no books exist or search returns no results",
+      "priority": "Should Have",
+      "source": "Wireframe: 01_books_list_view.svg",
+      "feature": "F001",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-011",
+      "category": "Add New Book",
+      "requirement": "System shall provide comprehensive form for adding new books with all required and optional fields in 2-column layout",
+      "priority": "Must Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-012",
+      "category": "Add New Book",
+      "requirement": "System shall allow image upload for book cover with drag-drop and click-to-upload support (max 5MB, JPEG/PNG/GIF/WebP)",
+      "priority": "Should Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-013",
+      "category": "Add New Book",
+      "requirement": "System shall enforce validation for all required book fields: Title, ISBN, Author, Genre, Publication Year, Language",
+      "priority": "Must Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-014",
+      "category": "Add New Book",
+      "requirement": "System shall accept optional metadata: Publisher, Pages, Price, Stock Quantity, Description",
+      "priority": "Should Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-015",
+      "category": "Add New Book",
+      "requirement": "System shall provide predefined list of 8 genres: Fiction, Non-Fiction, Dystopian, Romance, Mystery, Science, Biography, Fantasy",
+      "priority": "Must Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-016",
+      "category": "Add New Book",
+      "requirement": "System shall provide predefined list of 10 languages: English, Spanish, French, German, Italian, Portuguese, Chinese, Japanese, Korean, Arabic",
+      "priority": "Must Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-017",
+      "category": "Add New Book",
+      "requirement": "System shall validate ISBN format (ISBN-10/13) and ensure uniqueness in database",
+      "priority": "Must Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-018",
+      "category": "Add New Book",
+      "requirement": "System shall validate all fields, submit book data to backend via POST /api/v1/books, and handle success/error responses",
+      "priority": "Must Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-019",
+      "category": "Add New Book",
+      "requirement": "System shall allow user to cancel adding book and return to Books List without saving",
+      "priority": "Must Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-020",
+      "category": "Add New Book",
+      "requirement": "System shall automatically set createdAt, updatedAt, isAvailable, viewCount, reviewCount, and rating on book creation",
+      "priority": "Must Have",
+      "source": "Wireframe: 02_add_book_form.svg",
+      "feature": "F002",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-021",
+      "category": "Advanced Search",
+      "requirement": "System shall provide dedicated search screen with Quick Search and Advanced Search sections",
+      "priority": "Should Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-022",
+      "category": "Advanced Search",
+      "requirement": "System shall provide single large search input for quick searches across title, author, ISBN, and keywords",
+      "priority": "Should Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-023",
+      "category": "Advanced Search",
+      "requirement": "System shall provide text inputs for Title, Author, ISBN, and Publisher in Advanced Search (partial match, case-insensitive)",
+      "priority": "Should Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-024",
+      "category": "Advanced Search",
+      "requirement": "System shall provide dropdown filters for Genre, Language, and Availability in Advanced Search (exact match)",
+      "priority": "Should Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-025",
+      "category": "Advanced Search",
+      "requirement": "System shall provide From and To year inputs for publication year range search",
+      "priority": "Should Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-026",
+      "category": "Advanced Search",
+      "requirement": "System shall provide Min and Max price inputs for price range search",
+      "priority": "Could Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-027",
+      "category": "Advanced Search",
+      "requirement": "System shall provide Sort Results By dropdown with 8 options: Relevance, Title, Author, Year, Price, Rating",
+      "priority": "Should Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-028",
+      "category": "Advanced Search",
+      "requirement": "System shall provide three checkbox filters: In Stock Only, On Sale, New Releases",
+      "priority": "Could Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-029",
+      "category": "Advanced Search",
+      "requirement": "System shall submit advanced search criteria to backend via GET /api/v1/books/search and display results",
+      "priority": "Should Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-030",
+      "category": "Advanced Search",
+      "requirement": "System shall provide 'Clear Filters' button to reset all advanced search fields",
+      "priority": "Should Have",
+      "source": "Wireframe: 03_search_books.svg",
+      "feature": "F003",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-031",
+      "category": "Edit/Update Book",
+      "requirement": "System shall provide pre-populated form for editing existing book with same layout as Add Book form",
+      "priority": "Must Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-032",
+      "category": "Edit/Update Book",
+      "requirement": "System shall fetch book data via GET /api/v1/books/{id} and pre-populate all form fields",
+      "priority": "Must Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-033",
+      "category": "Edit/Update Book",
+      "requirement": "System shall display book ID, last updated timestamp, and other metadata in prominent info banner",
+      "priority": "Should Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-034",
+      "category": "Edit/Update Book",
+      "requirement": "System shall display ISBN as read-only field that cannot be modified (with lock icon)",
+      "priority": "Must Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-035",
+      "category": "Edit/Update Book",
+      "requirement": "System shall allow changing book cover with 'Change Image' button",
+      "priority": "Should Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-036",
+      "category": "Edit/Update Book",
+      "requirement": "System shall allow modifying all fields except ISBN, id, createdAt",
+      "priority": "Must Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-037",
+      "category": "Edit/Update Book",
+      "requirement": "System shall validate changes, submit via PUT /api/v1/books/{id}, and handle success/error responses",
+      "priority": "Must Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-038",
+      "category": "Edit/Update Book",
+      "requirement": "System shall detect when no changes were made and show informational message instead of submitting",
+      "priority": "Could Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-039",
+      "category": "Edit/Update Book",
+      "requirement": "System shall allow canceling edit and returning to previous screen without saving changes",
+      "priority": "Must Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-040",
+      "category": "Edit/Update Book",
+      "requirement": "System shall automatically update updatedAt timestamp and recalculate isAvailable on book update",
+      "priority": "Must Have",
+      "source": "Wireframe: 04_update_book_form.svg",
+      "feature": "F004",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-041",
+      "category": "View Book Details",
+      "requirement": "System shall display comprehensive book information in rich detail view with large cover, metadata grid, and action buttons",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-042",
+      "category": "View Book Details",
+      "requirement": "System shall fetch book via GET /api/v1/books/{id} and increment view count",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-043",
+      "category": "View Book Details",
+      "requirement": "System shall display book cover in large format with availability badge overlay",
+      "priority": "Should Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-044",
+      "category": "View Book Details",
+      "requirement": "System shall prominently display book title, author name, and star rating with review count",
+      "priority": "Should Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-045",
+      "category": "View Book Details",
+      "requirement": "System shall display price information with current price, original price (if different), discount, and stock quantity",
+      "priority": "Should Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-046",
+      "category": "View Book Details",
+      "requirement": "System shall display book metadata in definition list format: ISBN, Publisher, Publication Year, Language, Pages, Genre",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-047",
+      "category": "View Book Details",
+      "requirement": "System shall display full book description in text block below details grid",
+      "priority": "Should Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-048",
+      "category": "View Book Details",
+      "requirement": "System shall display metadata footer showing Book ID, Added date, Last Updated date, and View count",
+      "priority": "Could Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-049",
+      "category": "View Book Details",
+      "requirement": "System shall provide 'Edit Book' button to navigate to Edit Book Form",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-050",
+      "category": "View Book Details",
+      "requirement": "System shall provide '← Back' button to return to Books List View",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F005",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-051",
+      "category": "Delete Book",
+      "requirement": "System shall provide 'Delete Book' button on Book Details screen that triggers delete confirmation modal",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F006",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-052",
+      "category": "Delete Book",
+      "requirement": "System shall display modal dialog with book details and confirmation buttons to prevent accidental deletion",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F006",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-053",
+      "category": "Delete Book",
+      "requirement": "System shall allow canceling deletion, closing modal and returning to Book Details",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F006",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-054",
+      "category": "Delete Book",
+      "requirement": "System shall execute deletion via DELETE /api/v1/books/{id} and redirect to Books List on success",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F006",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-055",
+      "category": "Delete Book",
+      "requirement": "System shall perform hard delete (permanent removal from database) rather than soft delete",
+      "priority": "Must Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F006",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-056",
+      "category": "Duplicate Book",
+      "requirement": "System shall provide 'Duplicate' button on Book Details screen to create copy of book",
+      "priority": "Could Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F007",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-057",
+      "category": "Duplicate Book",
+      "requirement": "System shall create copy of book via POST /api/v1/books/{id}/duplicate with modified title and new ISBN requirement",
+      "priority": "Could Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F007",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-058",
+      "category": "Duplicate Book",
+      "requirement": "System shall navigate to Edit Book Form for duplicated book, requiring user to modify ISBN before saving",
+      "priority": "Could Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F007",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-059",
+      "category": "Export Book Data",
+      "requirement": "System shall provide 'Export Data' button on Book Details screen to download book information",
+      "priority": "Could Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F008",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-060",
+      "category": "Export Book Data",
+      "requirement": "System shall support exporting book data in JSON, CSV, and PDF formats",
+      "priority": "Could Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F008",
+      "testable": true
+    },
+    {
+      "requirementId": "FR-061",
+      "category": "Export Book Data",
+      "requirement": "System shall provide GET /api/v1/books/{id}/export?format={format} endpoint returning file download",
+      "priority": "Could Have",
+      "source": "Wireframe: 05_book_details_delete.svg",
+      "feature": "F008",
+      "testable": true
+    }
+  ],
+  "nonFunctional": [
+    {
+      "requirementId": "NFR-001",
+      "category": "Performance",
+      "requirement": "Page load time shall be < 2 seconds for all screens on standard broadband (>10 Mbps)",
+      "priority": "Must Have",
+      "metric": "Time to interactive (TTI) measured via Lighthouse",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-002",
+      "category": "Performance",
+      "requirement": "API response time shall be < 500ms for 95% of requests under normal load",
+      "priority": "Must Have",
+      "metric": "P95 response time measured via application monitoring",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-003",
+      "category": "Performance",
+      "requirement": "Search results shall be returned < 1 second for collections up to 10,000 books",
+      "priority": "Should Have",
+      "metric": "Search query execution time",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-004",
+      "category": "Performance",
+      "requirement": "System shall support 50 concurrent users without performance degradation",
+      "priority": "Should Have",
+      "metric": "Response time under concurrent load",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-005",
+      "category": "Performance",
+      "requirement": "All database queries shall use appropriate indexes and avoid N+1 queries",
+      "priority": "Must Have",
+      "metric": "Query execution plans, slow query logs",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-006",
+      "category": "Performance",
+      "requirement": "Book cover images shall load progressively with placeholders to avoid layout shift",
+      "priority": "Should Have",
+      "metric": "Cumulative Layout Shift (CLS) < 0.1",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-007",
+      "category": "Security",
+      "requirement": "All API endpoints and web pages shall use HTTPS only in production",
+      "priority": "Must Have",
+      "metric": "Boolean: HTTPS enabled, HTTP redirects to HTTPS",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-008",
+      "category": "Security",
+      "requirement": "All database queries shall use parameterized queries to prevent SQL injection",
+      "priority": "Must Have",
+      "metric": "Code review, security audit",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-009",
+      "category": "Security",
+      "requirement": "All user input shall be sanitized and escaped to prevent cross-site scripting attacks",
+      "priority": "Must Have",
+      "metric": "Security testing, penetration testing",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-010",
+      "category": "Security",
+      "requirement": "All state-changing operations shall include CSRF token validation",
+      "priority": "Should Have",
+      "metric": "Security testing",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-011",
+      "category": "Security",
+      "requirement": "All user input shall be validated on both client and server side",
+      "priority": "Must Have",
+      "metric": "Test coverage, validation error handling",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-012",
+      "category": "Security",
+      "requirement": "File uploads shall validate file type, size, and scan for malicious content",
+      "priority": "Must Have",
+      "metric": "Upload validation tests",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-013",
+      "category": "Security",
+      "requirement": "API endpoints shall implement rate limiting to prevent abuse",
+      "priority": "Could Have",
+      "metric": "Rate limit configuration and testing",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-014",
+      "category": "Security",
+      "requirement": "HTTP response shall include security headers (X-Frame-Options, X-Content-Type-Options, etc.)",
+      "priority": "Should Have",
+      "metric": "Security header scanner",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-015",
+      "category": "Scalability",
+      "requirement": "Backend shall be stateless to support horizontal scaling",
+      "priority": "Could Have",
+      "metric": "Load testing with multiple instances",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-016",
+      "category": "Scalability",
+      "requirement": "Database connections shall use pooling to optimize resource usage",
+      "priority": "Must Have",
+      "metric": "Connection pool metrics (active, idle, wait time)",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-017",
+      "category": "Scalability",
+      "requirement": "Frequently accessed data shall be cached to reduce database load",
+      "priority": "Could Have",
+      "metric": "Cache hit ratio",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-018",
+      "category": "Scalability",
+      "requirement": "System shall perform acceptably with collections up to 10,000 books",
+      "priority": "Should Have",
+      "metric": "Performance testing with 10K records",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-019",
+      "category": "Reliability",
+      "requirement": "System shall maintain 99.5% uptime during business hours",
+      "priority": "Should Have",
+      "metric": "Uptime monitoring, incident logs",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-020",
+      "category": "Reliability",
+      "requirement": "All errors shall be caught, logged, and displayed to user with helpful messages",
+      "priority": "Must Have",
+      "metric": "Error tracking coverage, user feedback",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-021",
+      "category": "Reliability",
+      "requirement": "All API requests, errors, and important operations shall be logged",
+      "priority": "Must Have",
+      "metric": "Log coverage, log analysis",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-022",
+      "category": "Reliability",
+      "requirement": "System shall handle backend failures gracefully with user-friendly error messages",
+      "priority": "Should Have",
+      "metric": "Error handling tests",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-023",
+      "category": "Reliability",
+      "requirement": "Zero data loss or corruption under normal operations",
+      "priority": "Must Have",
+      "metric": "Data validation tests, consistency checks",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-024",
+      "category": "Usability",
+      "requirement": "Users shall complete core tasks (add, search, edit book) without training or documentation",
+      "priority": "Must Have",
+      "metric": "Usability testing, task completion rate",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-025",
+      "category": "Usability",
+      "requirement": "Application shall be fully functional and visually appropriate on mobile, tablet, and desktop devices",
+      "priority": "Should Have",
+      "metric": "Visual verification across devices, responsive testing tools",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-026",
+      "category": "Usability",
+      "requirement": "Application shall meet WCAG 2.1 Level AA accessibility standards",
+      "priority": "Should Have",
+      "metric": "Automated accessibility testing (axe, Lighthouse), manual testing",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-027",
+      "category": "Usability",
+      "requirement": "Application shall work correctly on latest 2 versions of Chrome, Firefox, Safari, and Edge",
+      "priority": "Must Have",
+      "metric": "Cross-browser testing",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-028",
+      "category": "Usability",
+      "requirement": "All user actions shall provide immediate visual feedback (loading states, success/error messages)",
+      "priority": "Must Have",
+      "metric": "User testing, feedback coverage",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-029",
+      "category": "Usability",
+      "requirement": "Forms shall provide inline validation, clear error messages, and field-level help text",
+      "priority": "Must Have",
+      "metric": "Usability testing, user satisfaction",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-030",
+      "category": "Maintainability",
+      "requirement": "Code shall follow industry best practices and style guides",
+      "priority": "Must Have",
+      "metric": "Code review, linting",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-031",
+      "category": "Maintainability",
+      "requirement": "All APIs, components, and setup procedures shall be documented",
+      "priority": "Should Have",
+      "metric": "Documentation coverage",
+      "testable": false
+    },
+    {
+      "requirementId": "NFR-032",
+      "category": "Maintainability",
+      "requirement": "Unit test coverage shall be > 80% for backend and > 70% for frontend",
+      "priority": "Should Have",
+      "metric": "JaCoCo coverage report (backend), Vitest coverage (frontend)",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-033",
+      "category": "Maintainability",
+      "requirement": "All critical user flows shall have integration tests",
+      "priority": "Should Have",
+      "metric": "Critical path coverage",
+      "testable": true
+    },
+    {
+      "requirementId": "NFR-034",
+      "category": "Maintainability",
+      "requirement": "Application shall log sufficient information for debugging and monitoring",
+      "priority": "Must Have",
+      "metric": "Log coverage, incident resolution time",
+      "testable": true
+    }
+  ],
+  "summary": {
+    "totalRequirements": 95,
+    "functional": 61,
+    "nonFunctional": 34,
+    "mustHave": 60,
+    "shouldHave": 29,
+    "couldHave": 6,
+    "wontHave": 0,
+    "testable": 93,
+    "nonTestable": 2,
+    "categories": {
+      "functional": {
+        "bookListManagement": 10,
+        "addNewBook": 10,
+        "advancedSearch": 10,
+        "editUpdateBook": 10,
+        "viewBookDetails": 10,
+        "deleteBook": 5,
+        "duplicateBook": 3,
+        "exportBookData": 3
+      },
+      "nonFunctional": {
+        "performance": 6,
+        "security": 8,
+        "scalability": 4,
+        "reliability": 5,
+        "usability": 6,
+        "maintainability": 5
+      }
+    }
+  }
+}

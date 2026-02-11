@@ -1,0 +1,723 @@
+{
+  "project": "Books Online - Book Management System",
+  "apiVersion": "1.0.0",
+  "baseUrl": "http://localhost:8080/api/v1",
+  "productionUrl": "https://api.booksonline.com/v1",
+  "generatedDate": "2026-02-11",
+  "authentication": "None (V1) - Open Access",
+  "totalEndpoints": 8,
+  "entities": ["Book"],
+
+  "endpoints": [
+    {
+      "id": 1,
+      "method": "GET",
+      "path": "/books",
+      "fullPath": "http://localhost:8080/api/v1/books",
+      "summary": "List all books (paginated)",
+      "description": "Retrieve a paginated list of all books with optional sorting",
+      "tag": "Books",
+      "auth": false,
+      "requestBody": null,
+      "queryParameters": [
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "default": 0,
+          "description": "Page number (0-indexed)"
+        },
+        {
+          "name": "size",
+          "type": "integer",
+          "required": false,
+          "default": 4,
+          "description": "Number of items per page (1-100)"
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "required": false,
+          "default": "id,asc",
+          "description": "Sort field and direction (e.g., title,asc)"
+        }
+      ],
+      "pathParameters": [],
+      "responses": [
+        {
+          "status": 200,
+          "description": "Successfully retrieved book list",
+          "contentType": "application/json"
+        },
+        {
+          "status": 500,
+          "description": "Internal server error",
+          "contentType": "application/json"
+        }
+      ],
+      "exampleRequest": "GET /api/v1/books?page=0&size=4&sort=title,asc",
+      "useCases": [
+        "Display book list on homepage",
+        "Browse all books in catalog",
+        "Implement infinite scroll"
+      ]
+    },
+    {
+      "id": 2,
+      "method": "GET",
+      "path": "/books/{id}",
+      "fullPath": "http://localhost:8080/api/v1/books/{id}",
+      "summary": "Get book by ID",
+      "description": "Retrieve a single book by its ID (increments view count)",
+      "tag": "Books",
+      "auth": false,
+      "requestBody": null,
+      "queryParameters": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "type": "integer (int64)",
+          "required": true,
+          "description": "Book ID"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "description": "Book found",
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Book not found",
+          "contentType": "application/json"
+        }
+      ],
+      "exampleRequest": "GET /api/v1/books/123",
+      "useCases": [
+        "Display book details page",
+        "View full book information",
+        "Track book popularity"
+      ]
+    },
+    {
+      "id": 3,
+      "method": "POST",
+      "path": "/books",
+      "fullPath": "http://localhost:8080/api/v1/books",
+      "summary": "Create new book",
+      "description": "Create a new book entry (ISBN must be unique)",
+      "tag": "Books",
+      "auth": false,
+      "requestBody": "BookRequest",
+      "queryParameters": [],
+      "pathParameters": [],
+      "requiredFields": [
+        "title",
+        "isbn",
+        "author",
+        "genre",
+        "publicationYear",
+        "language",
+        "isAvailable"
+      ],
+      "optionalFields": [
+        "publisher",
+        "pages",
+        "price",
+        "stockQuantity",
+        "description",
+        "coverImageUrl",
+        "rating",
+        "reviewCount"
+      ],
+      "systemManagedFields": [
+        "id",
+        "viewCount",
+        "createdAt",
+        "updatedAt"
+      ],
+      "responses": [
+        {
+          "status": 201,
+          "description": "Book created successfully",
+          "contentType": "application/json"
+        },
+        {
+          "status": 400,
+          "description": "Invalid input or validation error",
+          "contentType": "application/json"
+        },
+        {
+          "status": 409,
+          "description": "ISBN already exists",
+          "contentType": "application/json"
+        }
+      ],
+      "exampleRequest": "POST /api/v1/books",
+      "useCases": [
+        "Add new book to catalog",
+        "Bulk book import",
+        "Register new inventory"
+      ]
+    },
+    {
+      "id": 4,
+      "method": "PUT",
+      "path": "/books/{id}",
+      "fullPath": "http://localhost:8080/api/v1/books/{id}",
+      "summary": "Update book",
+      "description": "Update an existing book (ISBN cannot be changed)",
+      "tag": "Books",
+      "auth": false,
+      "requestBody": "BookRequest",
+      "queryParameters": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "type": "integer (int64)",
+          "required": true,
+          "description": "Book ID to update"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "description": "Book updated successfully",
+          "contentType": "application/json"
+        },
+        {
+          "status": 400,
+          "description": "Invalid input or validation error",
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Book not found",
+          "contentType": "application/json"
+        }
+      ],
+      "exampleRequest": "PUT /api/v1/books/456",
+      "useCases": [
+        "Edit book details",
+        "Update stock quantity",
+        "Correct book information"
+      ],
+      "notes": [
+        "ISBN field is immutable (cannot be changed)",
+        "Updates updatedAt timestamp automatically"
+      ]
+    },
+    {
+      "id": 5,
+      "method": "DELETE",
+      "path": "/books/{id}",
+      "fullPath": "http://localhost:8080/api/v1/books/{id}",
+      "summary": "Delete book",
+      "description": "Permanently delete a book from the database",
+      "tag": "Books",
+      "auth": false,
+      "requestBody": null,
+      "queryParameters": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "type": "integer (int64)",
+          "required": true,
+          "description": "Book ID to delete"
+        }
+      ],
+      "responses": [
+        {
+          "status": 204,
+          "description": "Book deleted successfully (no content)",
+          "contentType": null
+        },
+        {
+          "status": 404,
+          "description": "Book not found",
+          "contentType": "application/json"
+        }
+      ],
+      "exampleRequest": "DELETE /api/v1/books/456",
+      "useCases": [
+        "Remove discontinued books",
+        "Clean up test data",
+        "Delete duplicate entries"
+      ],
+      "warnings": [
+        "This operation is irreversible",
+        "All book data will be permanently removed"
+      ]
+    },
+    {
+      "id": 6,
+      "method": "GET",
+      "path": "/books/search",
+      "fullPath": "http://localhost:8080/api/v1/books/search",
+      "summary": "Advanced search books",
+      "description": "Search books with multiple filter criteria",
+      "tag": "Search",
+      "auth": false,
+      "requestBody": null,
+      "queryParameters": [
+        {
+          "name": "q",
+          "type": "string",
+          "required": false,
+          "description": "Quick search across title, author, ISBN"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Filter by title (partial match, case-insensitive)"
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "required": false,
+          "description": "Filter by author (partial match)"
+        },
+        {
+          "name": "isbn",
+          "type": "string",
+          "required": false,
+          "description": "Filter by ISBN (exact match)"
+        },
+        {
+          "name": "publisher",
+          "type": "string",
+          "required": false,
+          "description": "Filter by publisher (partial match)"
+        },
+        {
+          "name": "genre",
+          "type": "string",
+          "required": false,
+          "description": "Filter by genre (exact match)"
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "required": false,
+          "description": "Filter by language (exact match)"
+        },
+        {
+          "name": "minYear",
+          "type": "integer",
+          "required": false,
+          "description": "Minimum publication year"
+        },
+        {
+          "name": "maxYear",
+          "type": "integer",
+          "required": false,
+          "description": "Maximum publication year"
+        },
+        {
+          "name": "minPrice",
+          "type": "number",
+          "required": false,
+          "description": "Minimum price"
+        },
+        {
+          "name": "maxPrice",
+          "type": "number",
+          "required": false,
+          "description": "Maximum price"
+        },
+        {
+          "name": "inStock",
+          "type": "boolean",
+          "required": false,
+          "description": "Filter books with stock > 0"
+        },
+        {
+          "name": "onSale",
+          "type": "boolean",
+          "required": false,
+          "description": "Filter books with discount"
+        },
+        {
+          "name": "newReleases",
+          "type": "boolean",
+          "required": false,
+          "description": "Filter books from last year"
+        },
+        {
+          "name": "isAvailable",
+          "type": "boolean",
+          "required": false,
+          "description": "Filter by availability status"
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "required": false,
+          "default": "id,asc",
+          "description": "Sort field and direction"
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "default": 0,
+          "description": "Page number"
+        },
+        {
+          "name": "size",
+          "type": "integer",
+          "required": false,
+          "default": 10,
+          "description": "Items per page"
+        }
+      ],
+      "pathParameters": [],
+      "responses": [
+        {
+          "status": 200,
+          "description": "Search results",
+          "contentType": "application/json"
+        }
+      ],
+      "exampleRequest": "GET /api/v1/books/search?genre=Programming&minYear=2010&maxYear=2023&sort=rating,desc",
+      "useCases": [
+        "Search bar functionality",
+        "Advanced search page",
+        "Filter books by category",
+        "Find books within price range"
+      ],
+      "filterLogic": "All filters use AND logic",
+      "filterTypes": {
+        "textFilters": ["title", "author", "publisher"],
+        "exactMatch": ["genre", "language", "isAvailable", "isbn"],
+        "rangeFilters": ["minYear/maxYear", "minPrice/maxPrice"],
+        "booleanFilters": ["inStock", "onSale", "newReleases"]
+      }
+    },
+    {
+      "id": 7,
+      "method": "POST",
+      "path": "/books/{id}/duplicate",
+      "fullPath": "http://localhost:8080/api/v1/books/{id}/duplicate",
+      "summary": "Duplicate book",
+      "description": "Create a copy of an existing book with modifications",
+      "tag": "Actions",
+      "auth": false,
+      "requestBody": null,
+      "queryParameters": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "type": "integer (int64)",
+          "required": true,
+          "description": "Book ID to duplicate"
+        }
+      ],
+      "responses": [
+        {
+          "status": 201,
+          "description": "Book duplicated successfully",
+          "contentType": "application/json"
+        },
+        {
+          "status": 404,
+          "description": "Original book not found",
+          "contentType": "application/json"
+        }
+      ],
+      "exampleRequest": "POST /api/v1/books/123/duplicate",
+      "useCases": [
+        "Create book variations (different editions)",
+        "Quick entry of similar books",
+        "Template for new entries"
+      ],
+      "modifications": [
+        "Title appended with ' (Copy)'",
+        "ISBN cleared (empty string)",
+        "Review count reset to 0",
+        "View count reset to 0",
+        "All other fields copied from original"
+      ],
+      "typicalWorkflow": [
+        "User clicks duplicate button",
+        "Backend creates copy with modifications",
+        "Frontend navigates to edit form",
+        "User enters new unique ISBN",
+        "User saves the book"
+      ]
+    },
+    {
+      "id": 8,
+      "method": "GET",
+      "path": "/books/{id}/export",
+      "fullPath": "http://localhost:8080/api/v1/books/{id}/export",
+      "summary": "Export book data",
+      "description": "Export book data in various formats (JSON, CSV, PDF)",
+      "tag": "Actions",
+      "auth": false,
+      "requestBody": null,
+      "queryParameters": [
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "default": "json",
+          "enum": ["json", "csv", "pdf"],
+          "description": "Export format"
+        }
+      ],
+      "pathParameters": [
+        {
+          "name": "id",
+          "type": "integer (int64)",
+          "required": true,
+          "description": "Book ID to export"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "description": "Export successful",
+          "contentType": "application/json | text/csv | application/pdf"
+        },
+        {
+          "status": 404,
+          "description": "Book not found",
+          "contentType": "application/json"
+        }
+      ],
+      "exampleRequest": "GET /api/v1/books/123/export?format=pdf",
+      "useCases": [
+        "Download book details",
+        "Share book information",
+        "Create backup",
+        "Generate printable catalog"
+      ],
+      "formats": {
+        "json": {
+          "description": "Complete book object",
+          "contentType": "application/json",
+          "fileExtension": ".json"
+        },
+        "csv": {
+          "description": "Spreadsheet-compatible format",
+          "contentType": "text/csv",
+          "fileExtension": ".csv",
+          "disposition": "attachment"
+        },
+        "pdf": {
+          "description": "Formatted document with cover image",
+          "contentType": "application/pdf",
+          "fileExtension": ".pdf",
+          "disposition": "attachment",
+          "features": [
+            "Cover image (if available)",
+            "Title, author, ISBN prominently displayed",
+            "All metadata in formatted table",
+            "Description section",
+            "Footer with export date"
+          ]
+        }
+      }
+    }
+  ],
+
+  "commonPatterns": {
+    "pagination": {
+      "parameters": ["page", "size", "sort"],
+      "responseFormat": "Spring Data JPA Page object",
+      "fields": [
+        "content (array of items)",
+        "totalElements",
+        "totalPages",
+        "number (current page)",
+        "size",
+        "first (boolean)",
+        "last (boolean)"
+      ]
+    },
+    "errorHandling": {
+      "standardErrorFormat": {
+        "timestamp": "ISO 8601 date-time",
+        "status": "HTTP status code",
+        "error": "HTTP status reason phrase",
+        "message": "Error message",
+        "path": "Request path"
+      },
+      "validationErrorFormat": {
+        "timestamp": "ISO 8601 date-time",
+        "status": 400,
+        "error": "Bad Request",
+        "message": "Validation failed",
+        "errors": [
+          {
+            "field": "field name",
+            "rejectedValue": "invalid value",
+            "message": "error message"
+          }
+        ],
+        "path": "Request path"
+      }
+    },
+    "sorting": {
+      "format": "field,direction",
+      "examples": [
+        "title,asc",
+        "publicationYear,desc",
+        "rating,desc"
+      ],
+      "multiSort": "Supported with multiple sort parameters"
+    }
+  },
+
+  "httpStatusCodes": {
+    "success": [
+      {
+        "code": 200,
+        "name": "OK",
+        "usage": "GET, PUT successful"
+      },
+      {
+        "code": 201,
+        "name": "Created",
+        "usage": "POST successful"
+      },
+      {
+        "code": 204,
+        "name": "No Content",
+        "usage": "DELETE successful"
+      }
+    ],
+    "clientError": [
+      {
+        "code": 400,
+        "name": "Bad Request",
+        "usage": "Validation failure, invalid input"
+      },
+      {
+        "code": 404,
+        "name": "Not Found",
+        "usage": "Resource ID doesn't exist"
+      },
+      {
+        "code": 409,
+        "name": "Conflict",
+        "usage": "Duplicate constraint violation (ISBN)"
+      }
+    ],
+    "serverError": [
+      {
+        "code": 500,
+        "name": "Internal Server Error",
+        "usage": "Unexpected server failure"
+      }
+    ]
+  },
+
+  "schemas": {
+    "BookRequest": {
+      "type": "object",
+      "description": "Input DTO for creating/updating books",
+      "requiredFields": [
+        "title",
+        "isbn",
+        "author",
+        "genre",
+        "publicationYear",
+        "language",
+        "isAvailable"
+      ],
+      "totalFields": 18
+    },
+    "BookResponse": {
+      "type": "object",
+      "description": "Output DTO with all book data",
+      "totalFields": 18,
+      "includesSystemFields": ["id", "viewCount", "createdAt", "updatedAt"]
+    },
+    "BookPageResponse": {
+      "type": "object",
+      "description": "Paginated book list (Spring Data JPA Page format)",
+      "fields": [
+        "content",
+        "pageable",
+        "totalElements",
+        "totalPages",
+        "last",
+        "first",
+        "size",
+        "number",
+        "numberOfElements",
+        "empty"
+      ]
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "description": "Standard error response",
+      "fields": ["timestamp", "status", "error", "message", "path"]
+    },
+    "ValidationErrorResponse": {
+      "type": "object",
+      "description": "Validation error with field-level details",
+      "fields": [
+        "timestamp",
+        "status",
+        "error",
+        "message",
+        "errors (array)",
+        "path"
+      ]
+    }
+  },
+
+  "versioning": {
+    "current": "v1",
+    "strategy": "URI path versioning",
+    "format": "/api/v1/",
+    "future": {
+      "version": "v2",
+      "plannedFeatures": [
+        "JWT-based authentication",
+        "Role-based access control",
+        "User management endpoints",
+        "Rate limiting",
+        "Audit logging",
+        "Enhanced search (full-text)",
+        "Recommendations engine"
+      ]
+    }
+  },
+
+  "cors": {
+    "enabled": true,
+    "allowedOrigins": ["http://localhost:5173"],
+    "allowedMethods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "allowedHeaders": ["*"],
+    "allowCredentials": true,
+    "production": {
+      "allowedOrigins": ["https://booksonline.com"]
+    }
+  },
+
+  "testing": {
+    "swagger": "http://localhost:8080/swagger-ui.html",
+    "postmanCollection": "Available in repository",
+    "curlExamples": "See api-documentation.md"
+  },
+
+  "documentation": {
+    "openapiSpec": "openapi-spec.yaml",
+    "humanReadable": "api-documentation.md",
+    "quickReference": "endpoints-summary.json (this file)"
+  },
+
+  "metadata": {
+    "generatedBy": "API Spec Generator Agent",
+    "specification": "OpenAPI 3.0.3",
+    "lastUpdated": "2026-02-11",
+    "maintainer": "Books Online API Team",
+    "supportEmail": "support@booksonline.com"
+  }
+}
