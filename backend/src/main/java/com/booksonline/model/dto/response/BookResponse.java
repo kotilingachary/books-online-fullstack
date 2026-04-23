@@ -54,6 +54,7 @@ public class BookResponse {
     private String languages;
     private String language2;
     private String postalCode;
+    private String regionCode;
 
     // Audit fields (ISO 8601 format)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")

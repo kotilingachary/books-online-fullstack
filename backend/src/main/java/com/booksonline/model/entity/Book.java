@@ -120,6 +120,9 @@ public class Book {
     @Column(name = "postal_code", length = 20)
     private String postalCode;
 
+    @Column(name = "region_code", length = 10)
+    private String regionCode;
+
     // =================================================================
     // Availability
     // =================================================================

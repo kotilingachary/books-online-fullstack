@@ -97,4 +97,7 @@ public class BookRequest {
 
     @Size(max = 20, message = "Postal code must not exceed 20 characters")
     private String postalCode;
+
+    @Size(max = 10, message = "Region code must not exceed 10 characters")
+    private String regionCode;
 }

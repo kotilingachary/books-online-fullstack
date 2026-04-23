@@ -50,6 +50,7 @@ public class BookMapper {
                 .languages(request.getLanguages())
                 .language2(request.getLanguage2())
                 .postalCode(request.getPostalCode())
+                .regionCode(request.getRegionCode())
                 .build();
     }
 
@@ -89,6 +90,7 @@ public class BookMapper {
         entity.setLanguages(request.getLanguages());
         entity.setLanguage2(request.getLanguage2());
         entity.setPostalCode(request.getPostalCode());
+        entity.setRegionCode(request.getRegionCode());
         // viewCount is not updated from request
     }
 
@@ -127,6 +129,7 @@ public class BookMapper {
                 .languages(entity.getLanguages())
                 .language2(entity.getLanguage2())
                 .postalCode(entity.getPostalCode())
+                .regionCode(entity.getRegionCode())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
@@ -173,6 +176,7 @@ public class BookMapper {
                 .languages(original.getLanguages())
                 .language2(original.getLanguage2())
                 .postalCode(original.getPostalCode())
+                .regionCode(original.getRegionCode())
                 .build();
     }
 }
