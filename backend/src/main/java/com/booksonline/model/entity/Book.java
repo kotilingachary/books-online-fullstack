@@ -117,6 +117,9 @@ public class Book {
     @Column(name = "language2")
     private String language2;
 
+    @Column(name = "postal_code", length = 20)
+    private String postalCode;
+
     // =================================================================
     // Availability
     // =================================================================

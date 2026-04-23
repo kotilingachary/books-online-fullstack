@@ -94,4 +94,7 @@ public class BookRequest {
     private String languages;
 
     private String language2;
+
+    @Size(max = 20, message = "Postal code must not exceed 20 characters")
+    private String postalCode;
 }

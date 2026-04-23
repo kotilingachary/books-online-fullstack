@@ -49,6 +49,7 @@ CREATE TABLE books (
     country_code VARCHAR(255),
     languages VARCHAR(255),
     language2 VARCHAR(255),
+    postal_code VARCHAR(20),
 
     -- Availability
     is_available BOOLEAN NOT NULL DEFAULT TRUE,

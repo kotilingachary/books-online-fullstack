@@ -1,5 +1,6 @@
 package com.booksonline.controller;
 
+import com.booksonline.exception.BookNotFoundException;
 import com.booksonline.model.dto.request.BookRequest;
 import com.booksonline.model.dto.response.BookResponse;
 import com.booksonline.service.BookService;
@@ -289,6 +290,9 @@ public class BookController {
         logger.info("GET /api/v1/books/{}/export?format={}", id, format);
 
         BookResponse book = bookService.exportBook(id, format);
+        if (book == null) {
+            throw new BookNotFoundException(id);
+        }
         return ResponseEntity.ok(book);
     }
 }
