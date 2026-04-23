@@ -49,6 +49,11 @@ public class BookResponse {
     private Integer reviewCount;
     private Integer viewCount;
 
+    private String countryCode1;
+    private String countryCode;
+    private String languages;
+    private String language2;
+
     // Audit fields (ISO 8601 format)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime createdAt;

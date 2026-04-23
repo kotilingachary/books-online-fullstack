@@ -105,6 +105,18 @@ public class Book {
     @Builder.Default
     private Integer viewCount = 0;
 
+    @Column(name = "country_code1")
+    private String countryCode1;
+
+    @Column(name = "country_code")
+    private String countryCode;
+
+    @Column(name = "languages")
+    private String languages;
+
+    @Column(name = "language2")
+    private String language2;
+
     // =================================================================
     // Availability
     // =================================================================

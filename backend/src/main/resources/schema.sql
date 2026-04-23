@@ -44,6 +44,12 @@ CREATE TABLE books (
     review_count INT NOT NULL DEFAULT 0,
     view_count INT NOT NULL DEFAULT 0,
 
+    -- Country Codes
+    country_code1 VARCHAR(255),
+    country_code VARCHAR(255),
+    languages VARCHAR(255),
+    language2 VARCHAR(255),
+
     -- Availability
     is_available BOOLEAN NOT NULL DEFAULT TRUE,
 

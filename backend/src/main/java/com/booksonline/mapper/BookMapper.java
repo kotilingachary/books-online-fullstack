@@ -45,6 +45,10 @@ public class BookMapper {
                 .reviewCount(request.getReviewCount() != null ? request.getReviewCount() : 0)
                 .viewCount(0) // Always 0 for new books
                 .isAvailable(request.getIsAvailable())
+                .countryCode1(request.getCountryCode1())
+                .countryCode(request.getCountryCode())
+                .languages(request.getLanguages())
+                .language2(request.getLanguage2())
                 .build();
     }
 
@@ -79,6 +83,10 @@ public class BookMapper {
         entity.setRating(request.getRating());
         entity.setReviewCount(request.getReviewCount() != null ? request.getReviewCount() : 0);
         entity.setIsAvailable(request.getIsAvailable());
+        entity.setCountryCode1(request.getCountryCode1());
+        entity.setCountryCode(request.getCountryCode());
+        entity.setLanguages(request.getLanguages());
+        entity.setLanguage2(request.getLanguage2());
         // viewCount is not updated from request
     }
 
@@ -112,6 +120,10 @@ public class BookMapper {
                 .reviewCount(entity.getReviewCount())
                 .viewCount(entity.getViewCount())
                 .isAvailable(entity.getIsAvailable())
+                .countryCode1(entity.getCountryCode1())
+                .countryCode(entity.getCountryCode())
+                .languages(entity.getLanguages())
+                .language2(entity.getLanguage2())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
@@ -153,6 +165,10 @@ public class BookMapper {
                 .reviewCount(0) // Reset review count
                 .viewCount(0)   // Reset view count
                 .isAvailable(original.getIsAvailable())
+                .countryCode1(original.getCountryCode1())
+                .countryCode(original.getCountryCode())
+                .languages(original.getLanguages())
+                .language2(original.getLanguage2())
                 .build();
     }
 }

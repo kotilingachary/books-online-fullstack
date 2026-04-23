@@ -86,4 +86,12 @@ public class BookRequest {
 
     @Min(value = 0, message = "Review count must be non-negative")
     private Integer reviewCount;
+
+    private String countryCode1;
+
+    private String countryCode;
+
+    private String languages;
+
+    private String language2;
 }
