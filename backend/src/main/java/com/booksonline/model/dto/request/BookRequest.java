@@ -89,6 +89,8 @@ public class BookRequest {
 
     private String countryCode1;
 
+    @Size(min = 2, max = 3, message = "Country code must be 2 or 3 characters (ISO-3166)")
+    @Pattern(regexp = "^[A-Z]{2,3}$|^$", message = "Country code must be uppercase letters (e.g., US, USA)")
     private String countryCode;
 
     private String languages;
@@ -100,4 +102,6 @@ public class BookRequest {
 
     @Size(max = 10, message = "Region code must not exceed 10 characters")
     private String regionCode;
+
+    private Boolean discount;
 }

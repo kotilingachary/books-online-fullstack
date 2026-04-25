@@ -56,6 +56,8 @@ public class BookResponse {
     private String postalCode;
     private String regionCode;
 
+    private Boolean discount;
+
     // Audit fields (ISO 8601 format)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime createdAt;

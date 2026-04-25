@@ -108,7 +108,7 @@ public class Book {
     @Column(name = "country_code1")
     private String countryCode1;
 
-    @Column(name = "country_code")
+    @Column(name = "country_code", length = 3)
     private String countryCode;
 
     @Column(name = "languages")
@@ -130,6 +130,10 @@ public class Book {
     @Column(name = "is_available", nullable = false)
     @Builder.Default
     private Boolean isAvailable = true;
+
+    @Column(name = "discount", nullable = false)
+    @Builder.Default
+    private Boolean discount = false;
 
     // =================================================================
     // Audit Columns (Auto-managed by Spring Data JPA Auditing)
@@ -164,6 +168,9 @@ public class Book {
         }
         if (this.isAvailable == null) {
             this.isAvailable = true;
+        }
+        if (this.discount == null) {
+            this.discount = false;
         }
     }
 

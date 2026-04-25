@@ -46,7 +46,7 @@ CREATE TABLE books (
 
     -- Country Codes
     country_code1 VARCHAR(255),
-    country_code VARCHAR(255),
+    country_code VARCHAR(3),
     languages VARCHAR(255),
     language2 VARCHAR(255),
     postal_code VARCHAR(20),
@@ -54,6 +54,9 @@ CREATE TABLE books (
 
     -- Availability
     is_available BOOLEAN NOT NULL DEFAULT TRUE,
+
+    -- Discount
+    discount BOOLEAN NOT NULL DEFAULT FALSE,
 
     -- Audit Columns (Auto-managed)
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
