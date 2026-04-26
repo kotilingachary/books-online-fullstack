@@ -46,6 +46,17 @@ const BookDetailsPage = () => {
     }
   };
 
+  const handleAddToWishlist = async () => {
+    try {
+      const response = await booksService.addToWishlist(id);
+      setBook(response.data);
+      toast.success('Added to wishlist');
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
+      toast.error('Failed to add to wishlist');
+    }
+  };
+
   const handleDuplicate = async () => {
     try {
       const response = await booksService.duplicateBook(id);
@@ -180,7 +191,7 @@ const BookDetailsPage = () => {
 
           {/* Ratings & Engagement */}
           <Card title="Ratings & Engagement">
-            <dl className="grid grid-cols-3 gap-4">
+            <dl className="grid grid-cols-4 gap-4">
               <div>
                 <dt className="text-sm font-medium text-gray-500">Rating</dt>
                 <dd className="mt-1 flex items-center">
@@ -200,6 +211,22 @@ const BookDetailsPage = () => {
                 <dt className="text-sm font-medium text-gray-500">Views</dt>
                 <dd className="mt-1 text-sm text-gray-900">
                   {formatNumber(book.viewCount)}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-gray-500">Wishlist</dt>
+                <dd className="mt-1 flex items-center">
+                  <span className="text-red-500 text-lg mr-1" aria-label="wishlist">♥</span>
+                  <span className="text-sm text-gray-900">
+                    {formatNumber(book.wishlistCount ?? 0)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleAddToWishlist}
+                    className="ml-3 text-xs text-blue-600 hover:text-blue-700"
+                  >
+                    Add
+                  </button>
                 </dd>
               </div>
             </dl>

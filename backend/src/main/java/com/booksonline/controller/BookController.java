@@ -269,6 +269,27 @@ public class BookController {
     }
 
     // =================================================================
+    // POST /books/{id}/wishlist - Add book to wishlist
+    // =================================================================
+
+    @PostMapping("/{id}/wishlist")
+    @Operation(summary = "Add book to wishlist", description = "Increment the wishlist count for a book")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Wishlist count incremented"),
+        @ApiResponse(responseCode = "404", description = "Book not found")
+    })
+    public ResponseEntity<BookResponse> addToWishlist(
+            @PathVariable
+            @Parameter(description = "Book ID", example = "123")
+            Long id) {
+
+        logger.info("POST /api/v1/books/{}/wishlist", id);
+
+        BookResponse updatedBook = bookService.addToWishlist(id);
+        return ResponseEntity.ok(updatedBook);
+    }
+
+    // =================================================================
     // GET /books/{id}/export - Export book data
     // =================================================================
 

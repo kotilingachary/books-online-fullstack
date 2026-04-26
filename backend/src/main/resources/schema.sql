@@ -43,6 +43,7 @@ CREATE TABLE books (
     rating DECIMAL(2, 1),
     review_count INT NOT NULL DEFAULT 0,
     view_count INT NOT NULL DEFAULT 0,
+    wishlist_count INT NOT NULL DEFAULT 0,
 
     -- Country Codes
     country_code1 VARCHAR(255),
@@ -100,7 +101,10 @@ CREATE TABLE books (
     CONSTRAINT chk_books_review_count_nonnegative CHECK (review_count >= 0),
 
     -- View Count Must Be Non-Negative
-    CONSTRAINT chk_books_view_count_nonnegative CHECK (view_count >= 0)
+    CONSTRAINT chk_books_view_count_nonnegative CHECK (view_count >= 0),
+
+    -- Wishlist Count Must Be Non-Negative
+    CONSTRAINT chk_books_wishlist_count_nonnegative CHECK (wishlist_count >= 0)
 );
 
 -- =================================================================

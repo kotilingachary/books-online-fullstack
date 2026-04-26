@@ -271,4 +271,20 @@ public class BookServiceImpl implements BookService {
         // Future: Implement CSV and PDF export
         throw new IllegalArgumentException("Export format not supported: " + format);
     }
+
+    @Override
+    public BookResponse addToWishlist(Long id) {
+        logger.debug("Adding book to wishlist: id={}", id);
+
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
+
+        book.incrementWishlistCount();
+        Book savedBook = bookRepository.save(book);
+
+        logger.info("Wishlist count incremented: id={}, wishlistCount={}",
+                    id, savedBook.getWishlistCount());
+
+        return bookMapper.toResponse(savedBook);
+    }
 }

@@ -105,6 +105,10 @@ public class Book {
     @Builder.Default
     private Integer viewCount = 0;
 
+    @Column(name = "wishlist_count", nullable = false)
+    @Builder.Default
+    private Integer wishlistCount = 0;
+
     @Column(name = "country_code1")
     private String countryCode1;
 
@@ -166,6 +170,9 @@ public class Book {
         if (this.viewCount == null) {
             this.viewCount = 0;
         }
+        if (this.wishlistCount == null) {
+            this.wishlistCount = 0;
+        }
         if (this.isAvailable == null) {
             this.isAvailable = true;
         }
@@ -180,5 +187,9 @@ public class Book {
      */
     public void incrementViewCount() {
         this.viewCount = (this.viewCount == null ? 0 : this.viewCount) + 1;
+    }
+
+    public void incrementWishlistCount() {
+        this.wishlistCount = (this.wishlistCount == null ? 0 : this.wishlistCount) + 1;
     }
 }

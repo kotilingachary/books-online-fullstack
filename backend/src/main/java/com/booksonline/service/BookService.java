@@ -112,4 +112,13 @@ public interface BookService {
      * @throws com.booksonline.exception.BookNotFoundException if book not found
      */
     BookResponse exportBook(Long id, String format);
+
+    /**
+     * Increment the wishlist count for a book
+     *
+     * @param id Book ID
+     * @return Updated BookResponse DTO with the incremented wishlist count
+     * @throws com.booksonline.exception.BookNotFoundException if book not found
+     */
+    BookResponse addToWishlist(Long id);
 }

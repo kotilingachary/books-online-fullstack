@@ -125,6 +125,7 @@ public class BookMapper {
                 .rating(entity.getRating())
                 .reviewCount(entity.getReviewCount())
                 .viewCount(entity.getViewCount())
+                .wishlistCount(entity.getWishlistCount())
                 .isAvailable(entity.getIsAvailable())
                 .countryCode1(entity.getCountryCode1())
                 .countryCode(entity.getCountryCode())
@@ -173,6 +174,7 @@ public class BookMapper {
                 .rating(original.getRating())
                 .reviewCount(0) // Reset review count
                 .viewCount(0)   // Reset view count
+                .wishlistCount(0) // Reset wishlist count
                 .isAvailable(original.getIsAvailable())
                 .countryCode1(original.getCountryCode1())
                 .countryCode(original.getCountryCode())

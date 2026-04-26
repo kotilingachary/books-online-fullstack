@@ -93,6 +93,15 @@ const booksService = {
   },
 
   /**
+   * Increment the wishlist count for a book
+   * @param {number} id - Book ID
+   * @returns {Promise} Updated book response
+   */
+  addToWishlist: (id) => {
+    return api.post(`/books/${id}/wishlist`);
+  },
+
+  /**
    * Export book data
    * @param {number} id - Book ID
    * @param {string} format - Export format (json, csv, pdf)

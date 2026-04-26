@@ -48,6 +48,7 @@ public class BookResponse {
     private BigDecimal rating;
     private Integer reviewCount;
     private Integer viewCount;
+    private Integer wishlistCount;
 
     private String countryCode1;
     private String countryCode;
