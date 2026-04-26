@@ -37,6 +37,66 @@ START → Wireframe Analyzer → PRD Generator → User Stories Generator + Arch
 
 ## EXECUTION INSTRUCTIONS
 
+### Phase 0: Vector retrieval routing (only when `@vectordb` is in your input)
+
+**Trigger:** if your task description from the user contains the literal
+keyword `@vectordb` (or any `@vectordb-*` variant), do this phase. If
+not, **skip Phase 0 entirely** and start at Phase 1 — the rest of this
+file is byte-for-byte identical to non-vector behavior.
+
+**What this phase does:** runs ONE retrieval pass against the project's
+indexed vector DB, then splits the retrieved chunks into three layer-
+specific buckets (database, backend, frontend). Each downstream subagent
+receives ONLY its layer-relevant slice as part of its task description,
+not the full retrieval result. This avoids the multi-agent token bloat
+documented in `docs/architecture/AGENT_RETRIEVAL_ROUTING.md`.
+
+**Rule of thumb:** the user's prompt minus `@vectordb` is the retrieval
+query. Do not re-shape, summarize, or rephrase it — pass it through
+verbatim. Cosine similarity expects the user's words, not yours.
+
+**Action:**
+
+```bash
+# Strip the @vectordb keyword(s) from the user's prompt to get the
+# query for retrieval. Do not modify other words.
+USER_QUERY="$(echo "$USER_PROMPT" | sed -E 's/@vectordb(-[a-z]+)?//g' | xargs)"
+
+# One retrieval call → three pre-bucketed JSON slices.
+python3 ~/.claude/scripts/vectordb_route_chunks.py \
+    "$USER_QUERY" \
+    --top-k 30 \
+    --bucket-cap 3000 \
+    --output /tmp/vectordb_buckets.json \
+    --explain
+```
+
+After this runs, `/tmp/vectordb_buckets.json` contains:
+
+```json
+{
+  "query": "...",
+  "method": "...",
+  "confidence": {"score": 87, "band": "HIGH"},
+  "buckets": {
+    "db":       {"chunks": [...], "tokens_used": 1240, "chunk_count": 5},
+    "backend":  {"chunks": [...], "tokens_used": 2900, "chunk_count": 11},
+    "frontend": {"chunks": [...], "tokens_used": 2800, "chunk_count": 9}
+  }
+}
+```
+
+**Use this file** in Steps 7, 8, and 9 below to populate each subagent's
+task description with its routed slice. Each subagent receives only
+its bucket — never the full payload.
+
+**If retrieval fails or the bucket file is empty:** continue to Phase
+1 normally. The non-vector path remains the safety net; subagents will
+fall back to default Read/Grep behavior. Report the failure in your
+final summary so the user knows retrieval did not contribute.
+
+---
+
 ### Phase 1: Pre-Flight Checks
 
 #### Step 1: Validate Prerequisites
@@ -189,6 +249,31 @@ Execute all instructions autonomously.
 Expected outputs in artifacts/06-database-design/
 ```
 
+**If `/tmp/vectordb_buckets.json` exists** (Phase 0 ran), append the
+following to the Task tool's prompt before invoking the agent:
+
+```
+## Retrieved context (routed from @vectordb — db bucket)
+
+The following chunks were retrieved by vector search and pre-routed
+to your layer (database). Treat them as authoritative for the files
+they reference. Do NOT Read those files again unless a chunk
+references something the chunk doesn't include.
+
+<insert the contents of buckets.json -> buckets.db.chunks here, formatted as:
+  --- Chunk {i} [{score}] {file_path} :: {function_name} ({tokens} tokens) ---
+  Tags: {tags}
+  Summary: {summary}
+  Code:
+  {code}
+>
+
+Confidence: {confidence.band} {confidence.score}/100
+
+If after reviewing the retrieved context you find a file you need is
+missing, fall back to standard Read.
+```
+
 **Wait for completion.**
 
 **Validation:**
@@ -213,6 +298,27 @@ Expected outputs in artifacts/06-database-design/
 Read .claude/agents/07-backend-generator.md completely.
 Execute all instructions autonomously.
 Generate complete backend/ folder.
+```
+
+**If `/tmp/vectordb_buckets.json` exists** (Phase 0 ran), append the
+following to the Task tool's prompt before invoking the agent:
+
+```
+## Retrieved context (routed from @vectordb — backend bucket)
+
+The following chunks were retrieved by vector search and pre-routed
+to your layer (backend). Includes cross-cutting layer:entity chunks
+shared with the database designer, and cross-cutting layer:api_client
+chunks shared with the frontend generator. Treat them as authoritative
+for the files they reference.
+
+<insert the contents of buckets.json -> buckets.backend.chunks, formatted as
+in Step 7>
+
+Confidence: {confidence.band} {confidence.score}/100
+
+If after reviewing the retrieved context you find a file you need is
+missing, fall back to standard Read.
 ```
 
 **This is a LONG-RUNNING task. Be patient.**
@@ -246,6 +352,26 @@ cd backend && mvn clean compile
 Read .claude/agents/08-frontend-generator.md completely.
 Execute all instructions autonomously.
 Generate complete frontend/ folder.
+```
+
+**If `/tmp/vectordb_buckets.json` exists** (Phase 0 ran), append the
+following to the Task tool's prompt before invoking the agent:
+
+```
+## Retrieved context (routed from @vectordb — frontend bucket)
+
+The following chunks were retrieved by vector search and pre-routed
+to your layer (frontend). Includes cross-cutting layer:api_client
+chunks shared with the backend generator. Treat them as authoritative
+for the files they reference.
+
+<insert the contents of buckets.json -> buckets.frontend.chunks, formatted as
+in Step 7>
+
+Confidence: {confidence.band} {confidence.score}/100
+
+If after reviewing the retrieved context you find a file you need is
+missing, fall back to standard Read.
 ```
 
 **This is a LONG-RUNNING task. Be patient.**

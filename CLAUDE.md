@@ -89,3 +89,60 @@ Base URL: `http://localhost:8080/api/v1/books`
 ```
 VITE_API_URL=http://localhost:8080/api/v1
 ```
+
+---
+
+## Retrieval-aware mode (only when `## Retrieved context` is in your task)
+
+If your task description from the orchestrator contains a section
+titled `## Retrieved context (routed from @vectordb — <bucket> bucket)`,
+follow the rules below. **If that section is absent or empty, ignore
+this entire section** — work in the default Read/Grep/Edit way for your
+agent role. The non-vector path is unchanged.
+
+When the section IS present:
+
+1. The chunks under `## Retrieved context` were retrieved by vector
+   search (`/tmp/books.db`) and pre-routed to your layer by the
+   orchestrator. Treat them as **authoritative** for the files they
+   reference.
+2. Do **NOT** Read those files again unless a chunk explicitly
+   references something the chunk itself does not include
+   (e.g., the chunk says "see the FK constraint in table X" but
+   doesn't show table X). The retrieval has already done your
+   discovery work.
+3. Use chunk tags to understand structure:
+   - `layer:entity`, `layer:repository`, `sql_chunks` — database shape
+   - `layer:controller`, `layer:service`, `layer:mapper`,
+     `layer:exception_handler` — backend shape
+   - `layer:react_page`, `layer:react_component`, `layer:api_client`,
+     `layer:react_hook`, `layer:frontend_util` — frontend shape
+4. Cross-cutting chunks appear in multiple buckets by design:
+   - `layer:entity` (e.g. `Book.java`) is sent to BOTH database-designer
+     AND backend-generator. The entity definition you see is the
+     authoritative shape; do not Read it again.
+   - `layer:api_client` (e.g. `booksService.deleteBook`) is sent to
+     BOTH backend-generator AND frontend-generator. Same rule.
+5. If after reviewing the retrieved context you find a file you need
+   is missing, fall back to the standard Read workflow. This is
+   expected occasionally — retrieval isn't perfect on every query.
+6. Briefly note in your final report:
+   - which retrieved chunks you used,
+   - whether you fell back to Read for anything (and what),
+   - whether the retrieved context confidence band (HIGH/MEDIUM/LOW)
+     matched the quality you observed.
+
+   The user needs this telemetry to know whether retrieval routing
+   is paying off vs the default Read flow.
+
+If the retrieved context's confidence band is **MEDIUM** or **LOW**,
+be more skeptical of the routed chunks — verify with one Read on the
+most critical file before trusting them. If the band is **HIGH**,
+trust the chunks and skip Read.
+
+This block applies to any agent that finds `## Retrieved context` in
+its task description; today that's `06-database-designer`,
+`07-backend-generator`, `08-frontend-generator`. Other agents
+(wireframe-analyzer, prd-generator, test-generator, deployment-agent,
+etc.) never receive this section, so this block is silently a no-op
+for them.
