@@ -3,6 +3,119 @@
 ## Overview
 An intelligent multi-agent system that transforms Figma wireframes into a fully deployed application with React frontend, Java REST API backend, and H2 database.
 
+---
+
+## Quick Startup (running app)
+
+The repo currently contains a generated **Books Online** app. To bring it up locally:
+
+### Prerequisites
+- **JDK 21+** (tested on JDK 25 with Lombok 1.18.38)
+- **Maven 3.9+**
+- **Node.js 18+** (tested on 22.19.0)
+
+### Start backend (port 8080)
+```bash
+cd backend
+mvn spring-boot:run
+```
+Wait for `Started Application in N seconds`.
+
+### Start frontend (port 5173)
+```bash
+cd frontend
+npm install      # first time only
+npm run dev
+```
+
+### Or start both at once
+```bash
+./start.sh       # Mac/Linux
+```
+
+### Verify it's up
+```bash
+curl http://localhost:8080/api/v1/books          # 200, JSON list of 20 seed books
+curl -I http://localhost:5173/                   # 200, frontend index.html
+```
+
+---
+
+## Access points
+
+| Surface | URL | Notes |
+|---|---|---|
+| Frontend SPA | http://localhost:5173 | Main app — books list, details, add/edit, search |
+| Backend REST API | http://localhost:8080/api/v1/books | Base path for all 8 endpoints |
+| Swagger UI | http://localhost:8080/swagger-ui.html | Interactive API explorer |
+| OpenAPI spec | http://localhost:8080/v3/api-docs | Raw OpenAPI 3.0 JSON |
+| H2 console | http://localhost:8080/h2-console | DB browser — JDBC `jdbc:h2:file:./data/booksdb`, user `sa`, password blank |
+
+### Key API endpoints
+| Method | Path | Description |
+|---|---|---|
+| GET | `/api/v1/books` | List all (paginated) |
+| GET | `/api/v1/books/{id}` | Get by ID (increments view count) |
+| POST | `/api/v1/books` | Create |
+| PUT | `/api/v1/books/{id}` | Update |
+| DELETE | `/api/v1/books/{id}` | Delete |
+| GET | `/api/v1/books/search` | Advanced search (17+ filter params) |
+| POST | `/api/v1/books/{id}/duplicate` | Clone a book |
+| GET | `/api/v1/books/{id}/export` | Export book data |
+
+### Frontend env
+`frontend/.env`:
+```
+VITE_API_URL=http://localhost:8080/api/v1
+VITE_APP_ENV=development
+```
+
+---
+
+## Common commands
+
+### Backend
+```bash
+cd backend
+mvn spring-boot:run                            # run
+mvn test                                       # all tests
+mvn test -Dtest=BookControllerTest             # one test class
+mvn clean test jacoco:report                   # coverage → target/site/jacoco/
+mvn clean package -DskipTests                  # build JAR
+```
+
+### Frontend
+```bash
+cd frontend
+npm run dev                                    # dev server (HMR)
+npm run build                                  # production build → dist/
+npm run lint                                   # ESLint (zero-warnings policy)
+npm test                                       # Vitest unit tests
+npm test -- Button.test.jsx                    # one test file
+npm run test:coverage                          # coverage
+```
+
+### Stop running servers
+```bash
+pkill -f spring-boot:run                       # backend
+pkill -f vite                                  # frontend
+```
+
+---
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `Fatal error compiling: TypeTag :: UNKNOWN` | Lombok < 1.18.36 + JDK 24/25. Bump `<lombok.version>` in `backend/pom.xml` to **1.18.38**. |
+| `JAVA_HOME` points to JDK 8/11/17 but project needs 21+ | `export JAVA_HOME=$(/usr/libexec/java_home -v 21)` |
+| Port 8080 already in use | `lsof -ti:8080 \| xargs kill -9` |
+| Port 5173 already in use | Vite auto-picks next free port; or `lsof -ti:5173 \| xargs kill -9` |
+| Frontend can't reach backend (CORS / network) | Confirm `VITE_API_URL` in `frontend/.env` matches backend host:port |
+| H2 console login fails | JDBC URL must be exactly `jdbc:h2:file:./data/booksdb`, user `sa`, password blank |
+
+---
+
 ## Agent Architecture
 
 ### Execution Flow
