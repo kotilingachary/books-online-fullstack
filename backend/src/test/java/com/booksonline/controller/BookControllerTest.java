@@ -335,7 +335,7 @@ class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)));
 
-        verify(bookService).searchBooks(any(), any(), any(), any(), eq(2000), eq(2010), any(), any(), any(), any(), any(), any(), any(), any());
+        verify(bookService).searchBooks(any(), any(), any(), any(), any(), any(), any(), eq(2000), eq(2010), any(), any(), any(), any(), any());
     }
 
     // ==================== DUPLICATE TESTS ====================
